@@ -4,27 +4,26 @@
 
 | Réf | Objet | Client | Date limite | Éligibilité INVESTEE | Lien |
 |-----|-------|--------|-------------|----------------------|------|
-| 10026826 | Tablettes, ordinateurs, kits internet satellite | GIZ Kinshasa | **25/06/2026** (AUJOURD'HUI) | ✅ | [congoquotidien.com](https://www.congoquotidien.com/2026/06/10/actualite-rdc-acquisition-equipements-informatiques-giz/) |
-| UNDP-COD-01238 | Matériels télécom & informatiques (AMI) | PNUD RDC | 29/06/2026 | ✅ | [congoquotidien.com](https://www.congoquotidien.com/2026/06/10/actualite-rdc-manifestations-interet-pnud/) |
-| AMI-SIH | Homologation Systèmes d'Information Hospitalier | ANICNS / Min. Santé | 12/07/2026 | ⚠️ | [congoquotidien.com](https://www.congoquotidien.com/2026/06/16/actualite-rdc-homologation-sih-rdc/) |
+| 10026826 | Tablettes, ordinateurs, kits internet satellite (3 lots) | GIZ Kinshasa | **25 juin 2026** | ✅ | [congoquotidien.com](https://www.congoquotidien.com/2026/06/10/actualite-rdc-acquisition-equipements-informatiques-giz/) |
+| UNDP-COD-01238 | Matériels télécom et informatiques (AMI) | PNUD RDC | 29 juin 2026 | ⚠️ | [congoquotidien.com](https://www.congoquotidien.com/2026/06/10/actualite-rdc-manifestations-interet-pnud/) |
+| ANICNS/AMI/001/SIH/2026 | Homologation SIH | ANICNS / Min. Santé | 12 juil. 2026 | ⚠️ | [congoquotidien.com](https://www.congoquotidien.com/2026/06/16/actualite-rdc-homologation-sih-rdc/) |
 
 ## Actions immédiates
-1. **URGENT** — Finaliser et envoyer l'offre GIZ 10026826 avant ce soir à CD_ACHATS_Quotation@giz.de (3 PDF séparés).
-2. Préparer dossier AMI PNUD 01238 (RCCM, quitus, attestations fiscales/CNSS).
+1. **AUJOURD’HUI** — Si dossier GIZ prêt : envoyer 3 PDF à CD_ACHATS_Quotation@giz.de (objet : 10026826) avant minuit.
+2. Inscription Quantum PNUD + préparation AMI 01238 (matériel IT) — échéance 29/06.
 
 ## AO à surveiller (échéance < 7 jours)
-- **10026826 GIZ** — échéance aujourd'hui 25/06/2026
-- **UNDP-COD-01238 PNUD** — échéance 29/06/2026 (4 jours)
+- **GIZ 10026826** — échéance aujourd’hui (25/06)
+- **PNUD UNDP-COD-01238** — matériel IT — 29/06
+- **PNUD UNDP-COD-01237/01217** — impression/mobilier — 29/06 (moins prioritaire IT)
 
 ## Rappel documents dossier INVESTEE
 - [ ] RCCM, quitus, CNSS à jour
 
 ---
 
-**Checklist finale**
-- [x] KAWA_KANZURURU (café, posts, images)
-- [x] UZAAPP (produit web + conception visuelle)
-- [x] INVESTEE_GROUP (posts B2B + visuel jour impair)
-- [x] APPELS_OFFRES (AO IT RDC — sources réelles)
+**Checklist :** ✅ KAWA · ✅ UZAAPP · ✅ INVESTEE · ✅ APPELS_OFFRES
 
-**Visuels générés :** `output/visuals/kawa_kanzururu_2026-06-25.png`, `uzaapp_okapi16_2026-06-25.png`, `investee_group_2026-06-25.png` — régénérables via `python3 scripts/generate_visuals.py`.
+**Fichiers :** briefing complet dans `output/mission-quotidienne_2026-06-25.md` · 3 visuels Pillow dans `output/images/2026-06-25/`
+
+**Alerte urgente :** l’AO GIZ **10026826** (tablettes, ordinateurs, kits satellite) expire **aujourd’hui** — 25 juin 2026.

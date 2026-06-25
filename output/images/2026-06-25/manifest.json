@@ -1,33 +1,33 @@
 [
   {
     "file": "2026-06-25-kawa.png",
-    "brief": "Kawa Kanzururu — Café des neiges éternelles",
+    "brief": "Kawa Kanzururu — Café des neiges éternelles · Fairtrade",
     "key": "KAWA_KANZURURU",
-    "headline": "Café des neiges éternelles",
+    "headline": "Café des neiges éternelles · Fairtrade",
     "product": "",
     "price": ""
   },
   {
     "file": "2026-06-25-uzaapp-produit1.png",
-    "brief": "UZAAPP — Okapi 16",
+    "brief": "UZAAPP — Kit mini Starlink",
     "key": "UZAAPP",
-    "headline": "Okapi 16 — sur UZAAPP",
-    "product": "Okapi 16",
-    "price": ""
+    "headline": "Kit mini Starlink — 320 $",
+    "product": "Kit mini Starlink",
+    "price": "320"
   },
   {
     "file": "2026-06-25-uzaapp-produit2.png",
-    "brief": "UZAAPP — Redmi Note 14 Pro+",
+    "brief": "UZAAPP — NanoStation M2",
     "key": "UZAAPP",
-    "headline": "Redmi Note 14 Pro+ — sur UZAAPP",
-    "product": "Redmi Note 14 Pro+",
-    "price": ""
+    "headline": "Kit mini Starlink — 320 $",
+    "product": "NanoStation M2",
+    "price": "115"
   },
   {
     "file": "2026-06-25-investee-entreprise.png",
     "brief": "INVESTEE-GROUP",
     "key": "INVESTEE_GROUP",
-    "headline": "INVESTEE-GROUP",
+    "headline": "Cybersécurité & digitalisation · INVESTEE-GROUP",
     "product": "",
     "price": ""
   }

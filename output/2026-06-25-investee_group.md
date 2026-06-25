@@ -1,39 +1,41 @@
 # 💻 INVESTEE-GROUP — 25 juin 2026
 
 ## À faire aujourd'hui (communication & business)
-1. Publier un post sur le pilier cybersécurité du PNN 2026-2030 (SOC, CERT, ANCy).
-2. Contacter 2 PME butemboises pour audit helpdesk + proposition pack sécurité.
+1. Publier un post sur la cybersécurité (PNN 2026-2030, CERT national) — positionner INVESTEE comme partenaire local.
+2. Relancer 2 prospects Butembo : audit sécurité + helpdesk externalisé.
 
 ## Posts réseaux sociaux
 
 ### Facebook / LinkedIn
-**Texte :** La RDC investit 1,5 Md$ dans le numérique 2026-2030. INVESTEE-GROUP accompagne les entreprises de Butembo : helpdesk, développement, cybersécurité et formations. Protégez vos données dès aujourd'hui.
+**Texte :** La RDC accélère sa gouvernance numérique et sa cybersécurité (PNN 2026-2030, ANCy, CERT). INVESTEE-GROUP à Butembo : développement, helpdesk, sécurité, formations. Protégez vos données avant juillet 2026. investee-group.com
 
 ### LinkedIn (version pro B2B)
-**Texte :** Pilier 4 du PNN : cybersécurité et confiance numérique. INVESTEE-GROUP — NTIC à Butembo. Audit, SOC local, IM-SYSTEM, formations certifiantes. Parlons de votre feuille de route digitale.
+**Texte :** Transformation digitale + exigences réglementaires (arrêtés numériques mars 2026) : INVESTEE-GROUP propose audits, IM-SYSTEM, formations cybersécurité et infogérance pour PME/ONG. Demandez un diagnostic gratuit.
 
 ### X
-**Texte :** PNN 2026-2030 = cybersécurité prioritaire. INVESTEE-GROUP : helpdesk, dev, formations à Butembo. investee-group.com #RDC #NTIC
+**Texte :** Cybersécurité RDC 2026 : PNN, CERT, conformité. INVESTEE-GROUP — dev, helpdesk, sécurité, formations à Butembo. investee-group.com
 
 ## 🎨 Conception d'images — conseils du jour
 
 ### Visuel à créer
 - **Type :** bannière LinkedIn
-- **Message visuel :** Expertise cybersécurité alignée PNN 2026-2030
-- **Éléments :** bloc teal gauche, texte noir/blanc, ligne séparatrice
-- **Texte sur visuel :** « Cybersécurité & PNN 2026-2030 — investee-group.com »
-- **Dimensions :** 1200×627 px
-- **Brief créatif :** monochrome strict #268FA5, noir, blanc — pas d'orange ni multicolore
+- **Message visuel :** Expertise NTIC locale, confiance numérique
+- **Éléments :** logo, icônes serveur/code/sécurité
+- **Texte sur visuel :** « Cybersécurité & digitalisation · INVESTEE-GROUP »
+- **Dimensions :** 1200×628
+- **Brief créatif :** bandeau teal #268FA5 à gauche, icônes monochrome noir/blanc, fond blanc épuré
+
+**Visuel généré :** `output/images/2026-06-25/investee_group_2026-06-25.png`
 
 ### Idée carrousel (3 slides)
-1. Slide 1 : « PNN 2026-2030 — 4 piliers »
-2. Slide 2 : « Cybersécurité : SOC, CERT, ANCy »
-3. Slide 3 : « INVESTEE-GROUP vous accompagne »
+1. Slide 1 : « Vos données sont-elles protégées ? »
+2. Slide 2 : Services — dev, helpdesk, sécurité, formations
+3. Slide 3 : CTA « Diagnostic gratuit · investee-group.com »
 
 ## 💡 Conseil INVESTEE du jour
-Positionnez-vous comme partenaire local du PNN : formations cybersécurité = porte d'entrée B2B.
+Jour impair = visuel INVESTEE-GROUP (fait). Citez une actualité nationale (PNN/CERT) pour crédibiliser le message B2B.
 
 ## ⚡ Priorité du jour
-Envoyer le visuel LinkedIn à 3 prospects existants avec offre audit express.
+Publier la bannière LinkedIn + message ciblant 3 décideurs locaux (WhatsApp pro).
 
 ---
