@@ -10,7 +10,8 @@ Inclure :
 - À faire aujourd'hui (communication)
 - Posts Facebook, LinkedIn, TikTok, X (textes complets)
 - Conception d'images (sujet, cadrage, ambiance, texte sur visuel)
-- Bloc obligatoire `### Image à réaliser aujourd'hui` avec **Sujet**, **Texte sur l'image**, **Ambiance** (couleurs vert forêt, rouge cerise, or)
+- Bloc obligatoire `### Image à réaliser aujourd'hui` avec **Sujet** (graphique : montagnes, cerises, texte — **pas de photo humaine**), **Texte sur l'image**, **Ambiance** (couleurs hex charte)
+- Idée photo terrain (séparée) : ex. mains triant cerises — **à photographier sur place**, l'agent ne génère pas de photos réalistes
 - Conseil communication du jour
 
 Français. Max 350 mots.

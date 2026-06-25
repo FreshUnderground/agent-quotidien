@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import math
 import re
 from pathlib import Path
 
@@ -40,6 +39,40 @@ def _font(size: int, bold: bool = True) -> ImageFont.FreeTypeFont | ImageFont.Im
     return ImageFont.load_default()
 
 
+def _font_fit(
+    draw: ImageDraw.ImageDraw,
+    text: str,
+    max_width: int,
+    start_size: int,
+    bold: bool = True,
+    min_size: int = 28,
+) -> ImageFont.ImageFont:
+    for size in range(start_size, min_size - 1, -2):
+        font = _font(size, bold)
+        if draw.textlength(text, font=font) <= max_width:
+            return font
+    return _font(min_size, bold)
+
+
+def _draw_text_crisp(
+    draw: ImageDraw.ImageDraw,
+    xy: tuple[int, int],
+    text: str,
+    font: ImageFont.ImageFont,
+    fill: tuple[int, int, int],
+    outline: tuple[int, int, int] | None = None,
+    outline_width: int = 2,
+) -> None:
+    """Texte net avec contour optionnel pour lisibilité maximale."""
+    x, y = xy
+    if outline and outline_width > 0:
+        for dx in range(-outline_width, outline_width + 1):
+            for dy in range(-outline_width, outline_width + 1):
+                if dx or dy:
+                    draw.text((x + dx, y + dy), text, font=font, fill=outline)
+    draw.text((x, y), text, font=font, fill=fill)
+
+
 def _wrap_text(
     draw: ImageDraw.ImageDraw,
     text: str,
@@ -70,10 +103,11 @@ def _draw_multiline(
     font: ImageFont.ImageFont,
     fill: tuple[int, int, int],
     spacing: int = 12,
+    outline: tuple[int, int, int] | None = None,
 ) -> int:
     cy = y
     for line in lines:
-        draw.text((x, cy), line, font=font, fill=fill)
+        _draw_text_crisp(draw, (x, cy), line, font, fill, outline=outline)
         cy += font.size + spacing
     return cy
 
@@ -180,24 +214,24 @@ def render_kawa(
     draw.rectangle([0, SIZE - 340, SIZE, SIZE], fill=(255, 255, 255))
     draw.rectangle([0, SIZE - 344, SIZE, SIZE - 340], fill=_hex_to_rgb("#5BA3D9"))
 
-    title_font = _font(52)
-    sub_font = _font(30, bold=False)
+    headline = _clean_fr(headline)
+    subtitle = _clean_fr(subtitle)
     max_w = SIZE - 2 * MARGIN - 120
 
-    headline = _clean_fr(headline)[:90]
-    subtitle = _clean_fr(subtitle)[:120]
-
+    # Titre adaptatif — texte complet du briefing, jamais tronqué arbitrairement
+    title_font = _font_fit(draw, headline, max_w, 48, bold=True, min_size=32)
     lines = _wrap_text(draw, headline, title_font, max_w)
     y = SIZE - 310
-    y = _draw_multiline(draw, MARGIN, y, lines[:2], title_font, (0, 0, 0), spacing=8)
+    y = _draw_multiline(draw, MARGIN, y, lines[:3], title_font, (0, 0, 0), spacing=6)
 
+    sub_font = _font(28, bold=False)
     sub_lines = _wrap_text(draw, subtitle, sub_font, max_w)
     _draw_multiline(draw, MARGIN, y + 8, sub_lines[:2], sub_font, _hex_to_rgb("#5D4037"))
 
     # Badge Fairtrade discret
     badge_font = _font(22)
     draw.rounded_rectangle([MARGIN, MARGIN, MARGIN + 200, MARGIN + 44], radius=10, fill=_hex_to_rgb("#E53935"))
-    draw.text((MARGIN + 16, MARGIN + 8), "FAIRTRADE", font=badge_font, fill=(255, 255, 255))
+    _draw_text_crisp(draw, (MARGIN + 16, MARGIN + 8), "FAIRTRADE", badge_font, (255, 255, 255))
 
     _paste_logo(img, logo_path, "top-right", 0.20)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -220,42 +254,51 @@ def render_uzaapp(
     draw.polygon([(SIZE, 0), (SIZE - 280, 0), (SIZE, 280)], fill=teal)
     draw.ellipse([(SIZE - 120, 40), (SIZE - 60, 100)], fill=(255, 255, 255))
 
-    # Séparateur courbe stylisé
-    for i in range(0, SIZE, 4):
-        t = i / SIZE
-        y = int(180 + 80 * math.sin(t * math.pi))
-        draw.ellipse([i - 2, y, i + 2, y + 4], fill=(0, 0, 0))
+    # Séparateur courbe discret (sans fil noir)
+    draw.arc([MARGIN - 40, 120, SIZE - MARGIN + 40, 280], start=200, end=340, fill=(0, 0, 0), width=4)
 
     _draw_phone_icon(draw, SIZE // 2, 340, scale=1.4)
 
-    product_name = _clean_fr(product_name)[:60]
-    price = _clean_fr(price)[:30] if price else ""
-    headline = _clean_fr(headline)[:80]
-
-    name_font = _font(56)
-    price_font = _font(72)
-    cta_font = _font(34)
+    product_name = _clean_fr(product_name)
+    price = _clean_fr(price) if price else ""
+    headline = _clean_fr(headline)
     max_w = SIZE - 2 * MARGIN
 
-    # Nom produit — exact du briefing
+    # Nom produit — taille adaptée, texte exact du catalogue uzaapp.com
+    name_font = _font_fit(draw, product_name, max_w, 58, bold=True, min_size=36)
     lines = _wrap_text(draw, product_name, name_font, max_w)
-    y = 500
-    y = _draw_multiline(draw, MARGIN, y, lines[:2], name_font, (255, 255, 255))
+    y = 480
+    y = _draw_multiline(
+        draw, MARGIN, y, lines[:2], name_font, (255, 255, 255),
+        outline=(0, 0, 0), spacing=4,
+    )
 
     if price:
-        draw.text((MARGIN, y + 12), price, font=price_font, fill=(255, 255, 255))
+        price_font = _font_fit(draw, price, max_w, 80, bold=True, min_size=48)
+        _draw_text_crisp(
+            draw, (MARGIN, y + 16), price, price_font, (255, 255, 255),
+            outline=(0, 0, 0), outline_width=3,
+        )
 
-    # CTA
-    cta = headline if headline else "Commandez sur UZAAPP"
-    if "uzaapp" not in cta.lower():
-        cta = "Achetez sur UZAAPP"
+    # CTA : nom + prix + uzaapp.com
+    if price and price in headline:
+        cta = headline
+    elif price:
+        cta = f"{product_name} — {price}"
+    else:
+        cta = headline or f"Commandez sur uzaapp.com"
+
+    cta_font = _font_fit(draw, cta, max_w - 40, 34, bold=True, min_size=24)
     draw.rounded_rectangle([MARGIN, SIZE - 130, SIZE - MARGIN, SIZE - 60], radius=20, fill=teal)
     cta_lines = _wrap_text(draw, cta, cta_font, max_w - 40)
     cta_text = cta_lines[0]
     tw = draw.textlength(cta_text, font=cta_font)
-    draw.text(((SIZE - tw) // 2, SIZE - 112), cta_text, font=cta_font, fill=(255, 255, 255))
+    _draw_text_crisp(
+        draw, ((SIZE - tw) // 2, SIZE - 112), cta_text, cta_font, (255, 255, 255),
+    )
 
-    draw.text((MARGIN, SIZE - 48), "uzaapp.com", font=_font(24, bold=False), fill=(0, 0, 0))
+    site_font = _font(26, bold=True)
+    _draw_text_crisp(draw, (MARGIN, SIZE - 48), "uzaapp.com", site_font, (0, 0, 0))
 
     _paste_logo(img, logo_path, "bottom-right", 0.18)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -277,17 +320,16 @@ def render_investee(
 
     _draw_briefcase_icon(draw, MARGIN + 10, 120, teal)
 
-    headline = _clean_fr(headline)[:90]
-    subtitle = _clean_fr(subtitle)[:120]
-
-    title_font = _font(50)
-    sub_font = _font(28, bold=False)
+    headline = _clean_fr(headline)
+    subtitle = _clean_fr(subtitle)
     max_w = SIZE - 2 * MARGIN
 
+    title_font = _font_fit(draw, headline, max_w, 48, bold=True, min_size=30)
     lines = _wrap_text(draw, headline, title_font, max_w)
     y = 300
     y = _draw_multiline(draw, MARGIN, y, lines[:3], title_font, teal)
 
+    sub_font = _font(28, bold=False)
     sub_lines = _wrap_text(draw, subtitle, sub_font, max_w)
     _draw_multiline(draw, MARGIN, y + 16, sub_lines[:3], sub_font, (0, 0, 0))
 
@@ -295,7 +337,7 @@ def render_investee(
     site_font = _font(26)
     site = "investee-group.com"
     tw = draw.textlength(site, font=site_font)
-    draw.text(((SIZE - tw) // 2, SIZE - 82), site, font=site_font, fill=(255, 255, 255))
+    _draw_text_crisp(draw, ((SIZE - tw) // 2, SIZE - 82), site, site_font, (255, 255, 255))
 
     _paste_logo(img, logo_path, "bottom-right", 0.22)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -315,29 +357,29 @@ def render_im_system(
     draw = ImageDraw.Draw(img)
 
     draw.rectangle([0, 0, SIZE, 100], fill=navy)
+    headline = _clean_fr(headline)
+    subtitle = _clean_fr(subtitle)
+    max_w = SIZE - 2 * MARGIN
+
     brand_font = _font(42)
-    draw.text((MARGIN, 28), "IM-SYSTEM", font=brand_font, fill=(255, 255, 255))
+    _draw_text_crisp(draw, (MARGIN, 28), "IM-SYSTEM", brand_font, (255, 255, 255))
 
     _draw_dashboard_mock(draw, MARGIN, 140, SIZE - 2 * MARGIN, 340)
 
-    headline = _clean_fr(headline)[:90]
-    subtitle = _clean_fr(subtitle)[:100]
-    title_font = _font(44)
-    sub_font = _font(26, bold=False)
-    max_w = SIZE - 2 * MARGIN
-
+    title_font = _font_fit(draw, headline, max_w, 44, bold=True, min_size=30)
     lines = _wrap_text(draw, headline, title_font, max_w)
     y = 510
     y = _draw_multiline(draw, MARGIN, y, lines[:2], title_font, navy)
 
+    sub_font = _font(26, bold=False)
     sub_lines = _wrap_text(draw, subtitle, sub_font, max_w)
     _draw_multiline(draw, MARGIN, y + 8, sub_lines[:2], sub_font, blue)
 
     draw.rounded_rectangle([MARGIN, SIZE - 96, SIZE - MARGIN, SIZE - 36], radius=14, fill=blue)
     cta_font = _font(28)
-    cta = "Gérez votre entreprise"
+    cta = headline if headline and "IM" not in headline.upper()[:10] else "Gérez votre entreprise"
     tw = draw.textlength(cta, font=cta_font)
-    draw.text(((SIZE - tw) // 2, SIZE - 78), cta, font=cta_font, fill=(255, 255, 255))
+    _draw_text_crisp(draw, ((SIZE - tw) // 2, SIZE - 78), cta, cta_font, (255, 255, 255))
 
     _paste_logo(img, logo_path, "bottom-right", 0.20)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -345,10 +387,7 @@ def render_im_system(
 
 
 def _clean_fr(text: str) -> str:
-    """Nettoie le texte : français, sans guillemets parasites."""
+    """Nettoie le texte : français, sans guillemets parasites ni troncature."""
     text = text.strip().strip("«»\"'")
     text = re.sub(r"\s+", " ", text)
-    # Supprimer segments anglais entre parenthèses si trop longs
-    if len(text) > 80:
-        text = text.split("—")[0].split(" - ")[0].strip()
     return text

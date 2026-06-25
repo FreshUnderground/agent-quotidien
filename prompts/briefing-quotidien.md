@@ -44,7 +44,7 @@ Date du jour : date réelle d'exécution.
 - **Sujet :** …
 - **Cadrage :** (vertical 9:16 / carré 1:1 / paysage 16:9)
 - **Éléments à inclure :** …
-- **Ambiance :** couleurs, lumière (matin doré, mains au travail…)
+- **Ambiance :** couleurs hex de la charte (pas de photo réaliste, pas de personnes ni mains)
 - **Texte sur l'image (si graphique) :** …
 - **À éviter :** …
 
@@ -63,9 +63,9 @@ Date du jour : date réelle d'exécution.
 ## SECTION 2 — Marqueur obligatoire : `=== UZAAPP ===`
 
 **Marque :** Application mobile e-commerce INVESTEE-GROUP (vente/achat en ligne, Butembo/RDC)
-**Site :** https://uzaapp.com
+**Site officiel (source unique produits) :** https://uzaapp.com
 
-**Recherche web :** parcourir des sites e-commerce (Jumia RDC, Alibaba, Amazon, sites locaux) et identifier **1 à 2 produits tendance** adaptés au marché congolais (tech, mode, maison, agriculture…).
+**Recherche web obligatoire :** parcourir **https://uzaapp.com** et identifier **1 à 2 produits réels** du catalogue (nom exact et prix affiché sur le site). Ne pas inventer de produits. Ne pas utiliser Jumia, Alibaba ou Amazon comme source principale.
 
 **Livrable :**
 
@@ -77,9 +77,9 @@ Date du jour : date réelle d'exécution.
 ## Produits repérés (veille marché)
 
 ### Produit 1
-- **Nom :** …
-- **Source / site :** …
-- **Prix indicatif :** …
+- **Nom :** … (nom exact sur uzaapp.com)
+- **Source / site :** uzaapp.com
+- **Prix indicatif :** … (prix affiché sur uzaapp.com)
 - **Pourquoi pour UZAAPP :** …
 
 ### Produit 2 (optionnel)
@@ -91,6 +91,11 @@ Date du jour : date réelle d'exécution.
 - **Type visuel :** bannière app / post Instagram carré
 - **Format :** 1080×1080
 - **Texte accroche :** phrase courte en français avec le **nom exact** et le **prix** du Produit 1 (ex. « Okapi 16 — 75 $ »)
+
+### Image à réaliser aujourd'hui (Produit 1)
+- **Sujet :** le produit tel qu'il apparaît sur uzaapp.com
+- **Texte sur l'image :** nom + prix exacts (ex. « Okapi 16 — 75 $ »)
+- **Ambiance :** orange #E85D2C, teal #1A8A8A, blanc, noir uniquement
 
 ### Posts réseaux pour promouvoir ce produit via UZAAPP
 
@@ -194,7 +199,9 @@ Date du jour : date réelle d'exécution.
 - **OBLIGATOIRE : les 4 sections dans l'ordre** — ne pas s'arrêter après Kawa
 - **Max 300 mots par section** pour que tout arrive par email et WhatsApp
 - Ne pas inventer d'AO — sources réelles uniquement
-- **Visuels automatiques :** templates professionnels Pillow (texte FR lisible, charte stricte, pas d'IA photo). Chaque section doit inclure `### Image à réaliser aujourd'hui` avec **Sujet**, **Texte sur l'image** (français court) et **Ambiance** (codes hex). UZAAPP : le **Nom** et **Prix indicatif** de chaque produit doivent correspondre exactement aux visuels générés.
+- **Visuels automatiques (agent) :** templates graphiques Pillow uniquement — formes, texte FR net, charte stricte. **Jamais de photo IA** (mains/corps flous ou dupliqués). **Pas de personnes, pas de mains** sur les visuels auto. Pour Kawa : montagnes, cerises, texte du jour. Photos avec producteurs/mains = **à capturer sur le terrain**, pas générées par l'agent.
+- Ne pas mentionner de scripts ou dossiers inexistants (`generate_visuals.py`, `output/visuals/`). Les fichiers réels sont dans `output/images/YYYY-MM-DD/`.
+- **UZAAPP :** produits et prix **uniquement depuis uzaapp.com** ; nom et prix du briefing = texte exact sur le visuel généré.
 - **INVESTEE alternance :** jour impair = visuel entreprise INVESTEE-GROUP ; jour pair = visuel IM-SYSTEM (imsystem.investee-group.com)
 
 ### Charte graphique — OBLIGATOIRE (expert design)

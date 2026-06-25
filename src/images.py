@@ -1,14 +1,10 @@
-"""Génération des visuels sociaux — templates professionnels (défaut) ou IA optionnelle."""
+"""Génération des visuels sociaux — templates graphiques Pillow (texte FR net, sans IA photo)."""
 
 from __future__ import annotations
 
 import json
 import os
 import re
-import time
-import urllib.error
-import urllib.parse
-import urllib.request
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -70,18 +66,26 @@ class ImageBrief:
     product_name: str = ""
     price: str = ""
     alt_text: str = ""
-    prompt: str = ""  # utilisé seulement si IMAGE_PROVIDER=openai|pollinations
 
 
 def _extract_field(content: str, label: str) -> str:
-    pattern = rf"\*\*{re.escape(label)}:\*\*\s*(.+)"
-    match = re.search(pattern, content, re.IGNORECASE)
-    return match.group(1).strip() if match else ""
+    """Extrait une valeur après **Label :** (avec ou sans puce, parenthèses optionnelles)."""
+    patterns = [
+        rf"(?:^|\n)\s*[-*]?\s*\*\*{re.escape(label)}(?:\s*\([^)]*\))?\s*:\*\*\s*(.+)",
+        rf"\*\*{re.escape(label)}(?:\s*\([^)]*\))?\s*:\*\*\s*(.+)",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, content, re.IGNORECASE | re.MULTILINE)
+        if match:
+            val = match.group(1).strip().strip("«»\"'")
+            return val.split("\n")[0].strip()
+    return ""
 
 
 def _extract_image_block(content: str) -> str:
     block = re.search(
-        r"###\s*Image à réaliser aujourd'hui\s*(.*?)(?=\n###|\n## |\Z)",
+        r"###\s*(?:Image à réaliser(?:\s+aujourd'hui)?|Visuel à créer|Fiche créative(?:\s+Produit\s+\d+)?)"
+        r"\s*(.*?)(?=\n###|\n## |\Z)",
         content,
         re.DOTALL | re.IGNORECASE,
     )
@@ -96,45 +100,61 @@ def _extract_image_subject(content: str) -> str:
 
 
 def _extract_overlay_text(content: str) -> str:
-    section = _extract_image_block(content)
-    if section:
-        for label in ("Texte sur l'image", "Texte sur visuel", "Texte accroche"):
+    for label in (
+        "Texte sur l'image",
+        "Texte sur visuel",
+        "Texte accroche",
+        "Message visuel",
+    ):
+        section = _extract_image_block(content)
+        if section:
             text = _extract_field(section, label)
             if text:
                 return text
-    return _extract_field(content, "Texte accroche")
+        text = _extract_field(content, label)
+        if text:
+            return text
+    return ""
+
+
+def _extract_uzaapp_accroche(content: str, product_num: int) -> str:
+    fiche = re.search(
+        rf"###\s*Fiche créative\s+Produit\s+{product_num}\s*(.*?)(?=\n###|\n## |\Z)",
+        content,
+        re.DOTALL | re.IGNORECASE,
+    )
+    if fiche:
+        return _extract_field(fiche.group(0), "Texte accroche")
+    return ""
 
 
 def _extract_products(content: str) -> list[dict[str, str]]:
-    """Extrait nom + prix exacts de chaque produit UZAAPP du briefing."""
+    """Extrait nom + prix exacts de chaque produit UZAAPP du briefing (source uzaapp.com)."""
     products: list[dict[str, str]] = []
     blocks = re.split(r"(?=###\s*Produit\s+\d+)", content, flags=re.IGNORECASE)
     for block in blocks:
-        if not re.search(r"###\s*Produit\s+\d+", block, re.IGNORECASE):
+        num_match = re.search(r"###\s*Produit\s+(\d+)", block, re.IGNORECASE)
+        if not num_match:
             continue
+        product_num = int(num_match.group(1))
         name = _extract_field(block, "Nom")
         if not name:
             continue
-        price = _extract_field(block, "Prix indicatif")
-        accroche = _extract_field(block, "Texte accroche")
-        if not accroche and "Fiche créative" in content:
-            fiche = re.search(
-                rf"###\s*Fiche créative.*?(?=###|\Z)",
-                content,
-                re.DOTALL | re.IGNORECASE,
-            )
-            if fiche:
-                accroche = _extract_field(fiche.group(0), "Texte accroche")
+        price = _extract_field(block, "Prix indicatif") or _extract_field(block, "Prix")
+        accroche = (
+            _extract_field(block, "Texte accroche")
+            or _extract_uzaapp_accroche(content, product_num)
+        )
         products.append({"name": name, "price": price, "accroche": accroche})
         if len(products) >= 2:
             break
 
     if not products:
         for match in re.finditer(r"-\s*\*\*Nom\s*:\*\*\s*(.+)", content, re.IGNORECASE):
-            name = match.group(1).strip()
+            name = match.group(1).strip().strip("«»\"'")
             start = match.start()
-            chunk = content[start : start + 500]
-            price = _extract_field(chunk, "Prix indicatif")
+            chunk = content[start : start + 600]
+            price = _extract_field(chunk, "Prix indicatif") or _extract_field(chunk, "Prix")
             products.append({"name": name, "price": price, "accroche": ""})
             if len(products) >= 2:
                 break
@@ -174,7 +194,11 @@ def build_briefs_from_sections(sections: list, date_str: str | None = None) -> l
         for i, prod in enumerate(products[:2], start=1):
             name = prod["name"]
             price = prod["price"]
-            accroche = prod.get("accroche") or f"{name} — sur UZAAPP"
+            accroche = prod.get("accroche") or ""
+            if not accroche and price:
+                accroche = f"{name} — {price}"
+            elif not accroche:
+                accroche = name
             briefs.append(
                 ImageBrief(
                     key="UZAAPP",
@@ -191,7 +215,7 @@ def build_briefs_from_sections(sections: list, date_str: str | None = None) -> l
         content = section_map["INVESTEE_GROUP"]
         focus = investee_focus(day)
         subject = _extract_image_subject(content) or "Solutions NTIC pour entreprises"
-        headline = _extract_overlay_text(content) or "INVESTEE-GROUP"
+        headline = _extract_overlay_text(content) or subject
         if focus == "im-system":
             briefs.append(
                 ImageBrief(
@@ -244,77 +268,16 @@ def _render_template(brief: ImageBrief, out_path: Path) -> None:
     print(f"  Template OK : {out_path.name}")
 
 
-def _generate_pollinations(prompt: str, out_path: Path, seed: int) -> None:
-    encoded = urllib.parse.quote(prompt[:800])
-    url = (
-        f"https://image.pollinations.ai/prompt/{encoded}"
-        f"?width=1080&height=1080&seed={seed}&nologo=true"
-    )
-    req = urllib.request.Request(url, headers={"User-Agent": "agent-quotidien/1.0"})
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        data = resp.read()
-    if len(data) < 1000:
-        raise RuntimeError("Image Pollinations invalide")
-    out_path.write_bytes(data)
-
-
 def generate_image(brief: ImageBrief, out_path: Path, seed: int = 42) -> None:
+    """Génère un visuel graphique (Pillow). Pas de photo IA — pas de corps humains."""
     provider = os.environ.get("IMAGE_PROVIDER", "template").strip().lower()
+    if provider in ("pollinations", "openai"):
+        print(
+            f"  AVERTISSEMENT : IMAGE_PROVIDER={provider} ignoré "
+            "(IA photo désactivée : mains/corps flous ou dupliqués). Template pro utilisé."
+        )
     out_path.parent.mkdir(parents=True, exist_ok=True)
-
-    if provider == "template":
-        _render_template(brief, out_path)
-        return
-
-    openai_key = os.environ.get("OPENAI_API_KEY", "").strip()
-    last_error: Exception | None = None
-    for attempt in range(3):
-        try:
-            if provider == "openai" and openai_key and brief.prompt:
-                _generate_openai_legacy(brief.prompt, out_path, openai_key)
-            elif brief.prompt:
-                _generate_pollinations(brief.prompt, out_path, seed + attempt)
-            else:
-                _render_template(brief, out_path)
-                return
-            print(f"  Image IA OK : {out_path.name}")
-            return
-        except (urllib.error.URLError, urllib.error.HTTPError, RuntimeError, TimeoutError) as e:
-            last_error = e
-            print(f"  IA échouée ({attempt + 1}/3), fallback template…")
-            try:
-                _render_template(brief, out_path)
-                return
-            except Exception:
-                time.sleep(3)
-
-    raise RuntimeError(f"Échec {brief.filename} : {last_error}")
-
-
-def _generate_openai_legacy(prompt: str, out_path: Path, api_key: str) -> None:
-    payload = json.dumps(
-        {
-            "model": "dall-e-3",
-            "prompt": prompt[:4000],
-            "size": "1024x1024",
-            "quality": "standard",
-            "n": 1,
-        }
-    ).encode("utf-8")
-    req = urllib.request.Request(
-        "https://api.openai.com/v1/images/generations",
-        data=payload,
-        method="POST",
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
-    image_url = data["data"][0]["url"]
-    with urllib.request.urlopen(image_url, timeout=60) as img_resp:
-        out_path.write_bytes(img_resp.read())
+    _render_template(brief, out_path)
 
 
 def generate_daily_images(
@@ -333,8 +296,7 @@ def generate_daily_images(
         print("GENERATE_IMAGES=false — visuels ignorés.")
         return []
 
-    provider = os.environ.get("IMAGE_PROVIDER", "template")
-    print(f"Génération de {len(briefs)} visuel(s) pro via {provider}…")
+    print(f"Génération de {len(briefs)} visuel(s) graphiques (templates Pillow)…")
     paths: list[Path] = []
     for i, brief in enumerate(briefs):
         out_path = out_dir / brief.filename

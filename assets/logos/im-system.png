@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from shreethemes.in/bizcell/layouts/index-four.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Nov 2024 20:08:25 GMT -->
+<head>
+    <meta charset="utf-8" />
+    <title>Investee-group</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Investee-group" />
+    <meta name="keywords" content="Investee, Group, UzaApp, UzaPay" />
+    <meta name="author" content="Shreethemes" />
+    <meta name="website" content="https://investee-group.com" />
+    <meta name="email" content="investee@investee-group.com" />
+    <meta name="version" content="1.0.0" />
+
+    <!-- FAVICON -->
+    <link rel="icon" href="https://investee-group.com/views/images/home/investee_Logo0.png" sizes="32x32">
+    <link rel="icon" href="https://investee-group.com/views/images/home/investee_Logo0.png" sizes="192x192">
+    <link rel="icon" href="https://investee-group.com/views/images/home/investee_Logo0.png" sizes="512x512">
+
+    <!-- Open Graph -->
+    <meta property="og:image" content="https://investee-group.com/views/images/home/logo.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Investee Group">
+    <meta property="og:description" content="Investee Group - Votre partenaire en sécurité des systèmes.">
+
+    <!-- BOOTSTRAP -->
+    <link href="views/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- ICON -->
+    <link href="views/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="../../../unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <!-- SLIDER -->
+    <link rel="stylesheet" href="views/css/tiny-slider.css">
+    <link rel="stylesheet" href="views/css/tobii.min.css">
+    <!-- Custom Css -->
+    <link href="views/css/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="views/css/colors/default.css" rel="stylesheet" id="color-opt">
+
+</head>
+<body>
+    <section class="bg-home d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-12 text-center">
+                    <div class="title-heading">
+                        <img src="views/images/404/404.svg" class="img-fluid text-info" alt="">
+                        <h2 class="my-4 fw-bold fs-2 text-info">WOOPS ! Page Non Trouvée</h2>
+                        <p class="text-muted para-desc mx-auto">Cette page ne se figure pas dans notre système.</p>
+                    </div>
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="accueil" class="btn btn-info mt-4">Retour</a>
+                </div>
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+        <!--end container-->
+    </section>
+    <!--end section-->
+    <!-- ERROR PAGE -->
+
+    <!-- javascript -->
+
+    <script src="views/js/bootstrap.bundle.min.js"></script>
+    <!-- Switcher -->
+    <script src="views/js/switcher.js"></script>
+    <script src="views/js/feather.min.js"></script>
+    <!-- Main Js -->
+    <script src="views/js/plugins.init.js"></script>
+    <script src="views/js/app.js"></script>
+</body>
+
+
+<!-- Mirrored from shreethemes.in/bizcell/layouts/page-404.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Nov 2024 20:09:21 GMT -->
+</html>
