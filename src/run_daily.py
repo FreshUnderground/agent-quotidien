@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """
-Agent quotidien — briefing 4 marques + envoi email & WhatsApp.
+Agent quotidien — briefing + email, WhatsApp, Telegram.
 
 Usage:
   python src/run_daily.py
-  python src/run_daily.py --no-notify    # sauvegarde fichier seulement
-  python src/run_daily.py --notify-only  # renvoie le dernier briefing
-
-Marques : Kawa Kanzururu | UZAAPP | INVESTEE-GROUP | Appels d'offres
+  python src/run_daily.py --no-notify
+  python src/run_daily.py --notify-only
 """
 
 from __future__ import annotations
@@ -52,43 +50,16 @@ def save_result(text: str) -> Path:
 
 
 def save_sections(sections, date_str: str) -> None:
-    from notify import BriefingSection  # noqa: F401
-
     for s in sections:
         path = OUTPUT_DIR / f"{date_str}-{s.key.lower()}.md"
         path.write_text(s.content, encoding="utf-8")
 
 
 def run_cloud(prompt: str, api_key: str) -> str:
-    from cursor_sdk import Agent, AgentOptions, CloudAgentOptions
+    sys.path.insert(0, str(ROOT / "src"))
+    from cursor_api import run_cloud_prompt
 
-    result = Agent.prompt(
-        prompt,
-        AgentOptions(
-            api_key=api_key,
-            model="composer-2.5",
-            cloud=CloudAgentOptions(),
-        ),
-    )
-    if result.status == "error":
-        raise RuntimeError(f"Run échoué : {getattr(result, 'id', 'unknown')}")
-    return result.result or ""
-
-
-def run_local(prompt: str, api_key: str) -> str:
-    from cursor_sdk import Agent, AgentOptions, LocalAgentOptions
-
-    result = Agent.prompt(
-        prompt,
-        AgentOptions(
-            api_key=api_key,
-            model="composer-2.5",
-            local=LocalAgentOptions(cwd=str(ROOT)),
-        ),
-    )
-    if result.status == "error":
-        raise RuntimeError(f"Run échoué : {getattr(result, 'id', 'unknown')}")
-    return result.result or ""
+    return run_cloud_prompt(prompt, api_key)
 
 
 def notify_from_file(path: Path) -> int:
@@ -101,7 +72,8 @@ def notify_from_file(path: Path) -> int:
     log = dispatch_all_sections(sections, date_str)
     for k, v in log.items():
         print(f"  {k}: {v}")
-    return 0 if all(v == "ok" for v in log.values()) else 1
+    errors = [v for v in log.values() if v != "ok"]
+    return 1 if errors else 0
 
 
 def main() -> int:
@@ -109,13 +81,8 @@ def main() -> int:
     sys.path.insert(0, str(ROOT / "src"))
 
     parser = argparse.ArgumentParser(description="Briefing quotidien multi-marques")
-    parser.add_argument("--mode", choices=("cloud", "local"), default="cloud")
-    parser.add_argument("--no-notify", action="store_true", help="Ne pas envoyer email/WhatsApp")
-    parser.add_argument(
-        "--notify-only",
-        action="store_true",
-        help="Renvoyer les notifications du briefing du jour",
-    )
+    parser.add_argument("--no-notify", action="store_true")
+    parser.add_argument("--notify-only", action="store_true")
     args = parser.parse_args()
 
     date_str = datetime.now().strftime("%Y-%m-%d")
@@ -130,18 +97,15 @@ def main() -> int:
 
     api_key = os.environ.get("CURSOR_API_KEY", "").strip()
     if not api_key:
-        print(
-            "ERREUR : CURSOR_API_KEY manquant (cursor.com/dashboard → API Keys)",
-            file=sys.stderr,
-        )
+        print("ERREUR : CURSOR_API_KEY manquant", file=sys.stderr)
         return 1
 
     try:
         from notify import dispatch_all_sections, parse_sections
 
         prompt = load_prompt()
-        print(f"Mode {args.mode} — génération des 4 briefings…")
-        text = run_cloud(prompt, api_key) if args.mode == "cloud" else run_local(prompt, api_key)
+        print("Lancement agent Cursor Cloud (API REST)…")
+        text = run_cloud(prompt, api_key)
         if not text.strip():
             print("AVERTISSEMENT : réponse vide.", file=sys.stderr)
 
@@ -150,7 +114,7 @@ def main() -> int:
 
         sections = parse_sections(text)
         save_sections(sections, date_str)
-        print(f"Sections : {len(sections)} ({', '.join(s.key for s in sections)})")
+        print(f"Sections : {len(sections)}")
 
         if not args.no_notify:
             display_date = datetime.now().strftime("%d/%m/%Y")
@@ -158,17 +122,13 @@ def main() -> int:
             print("\nNotifications :")
             for k, v in log.items():
                 print(f"  {k}: {v}")
-            if not log:
-                print(
-                    "  (aucun envoi — configurez NOTIFY_EMAIL et/ou WHATSAPP dans .env)",
-                )
 
         return 0
-    except ImportError as e:
-        print(f"ERREUR import : {e}\n pip install cursor-sdk", file=sys.stderr)
-        return 1
     except Exception as e:
         print(f"ERREUR : {e}", file=sys.stderr)
+        import traceback
+
+        traceback.print_exc()
         return 1
 
 

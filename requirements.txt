@@ -1,1 +1,1 @@
-cursor-sdk>=0.1.0
+# Aucune dépendance externe — API REST Cursor via urllib (stdlib Python)

@@ -51,10 +51,10 @@ jobs:
           cache: pip
 
       - name: Dépendances
-        run: pip install -r requirements.txt
+        run: echo "Python stdlib uniquement — pas de pip install requis"
 
-      - name: Agent Cursor Cloud + email + WhatsApp
-        run: python src/run_daily.py --mode cloud
+      - name: Agent Cursor Cloud + email + WhatsApp + Telegram
+        run: python src/run_daily.py
 
       - name: Archiver le briefing sur GitHub
         uses: stefanzweifel/git-auto-commit-action@v5
