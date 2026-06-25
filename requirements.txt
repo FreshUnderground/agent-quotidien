@@ -1,1 +1,3 @@
-# Aucune dépendance externe — API REST Cursor via urllib (stdlib Python)
+# Aucune dépendance obligatoire — API REST Cursor via urllib (stdlib Python)
+# Pillow optionnel : superposition des logos officiels sur les visuels
+Pillow>=10.0.0

@@ -39,6 +39,10 @@ jobs:
       SEND_TELEGRAM: "true"
       TELEGRAM_MODE: user
       TELEGRAM_USER: ${{ secrets.TELEGRAM_USER }}
+      GENERATE_IMAGES: "true"
+      IMAGE_PROVIDER: pollinations
+      # Optionnel — meilleure qualité si clé OpenAI configurée :
+      # OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
       - name: Checkout
@@ -51,16 +55,16 @@ jobs:
           cache: pip
 
       - name: Dépendances
-        run: echo "Python stdlib uniquement — pas de pip install requis"
+        run: pip install -r requirements.txt
 
       - name: Agent Cursor Cloud + email + WhatsApp + Telegram
         run: python src/run_daily.py
 
-      - name: Archiver le briefing sur GitHub
+      - name: Archiver le briefing et les visuels sur GitHub
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "briefing $(date +%Y-%m-%d)"
-          file_pattern: output/*.md
+          file_pattern: output/**
 
       - name: Résumé
         if: always()

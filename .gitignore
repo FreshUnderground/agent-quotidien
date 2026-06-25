@@ -11,3 +11,8 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# Logos temporaires / invalides
+assets/logos/*-temp.*
+assets/logos/*-alt.*
+assets/logos/*.jpeg

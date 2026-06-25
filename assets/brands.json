@@ -1,0 +1,94 @@
+{
+  "KAWA_KANZURURU": {
+    "name": "Cooperative Kawa Kanzururu",
+    "site": "kawakanzururu.com",
+    "logo_file": "kawa.png",
+    "colors": {
+      "primary_blue": "#5BA3D9",
+      "green": "#4CAF50",
+      "red": "#E53935",
+      "brown": "#5D4037",
+      "black": "#000000",
+      "white": "#FFFFFF"
+    },
+    "palette_text": "ONLY these 6 colors: light blue #5BA3D9, green #4CAF50, cherry red #E53935, coffee brown #5D4037, black #000000, white #FFFFFF",
+    "identity": "Fairtrade arabica coffee cooperative Beni Rwenzori DRC. Authentic harvest, mountains, red cherries.",
+    "design_rules": {
+      "style": "Editorial brand design, clean agricultural premium, not stock photo clutter",
+      "max_colors": 4,
+      "allowed_colors": ["#5BA3D9", "#4CAF50", "#E53935", "#5D4037", "#000000", "#FFFFFF"],
+      "forbidden": ["purple", "pink", "yellow", "neon", "rainbow gradient", "random multicolor", "oversaturated", "clipart"],
+      "background": "white #FFFFFF or soft off-white, never busy patterns",
+      "typography": "Bold sans-serif, black text with blue accent underline or stripe — like logo split effect",
+      "composition": "60% negative space, hero subject left or center, text block bottom-left, logo zone bottom-right clear",
+      "mood": "Premium Fairtrade, authentic Nord-Kivu terroir, morning golden light on natural greens and cherry red only"
+    }
+  },
+  "UZAAPP": {
+    "name": "UZAAPP",
+    "site": "uzaapp.com",
+    "logo_file": "uzaapp.png",
+    "colors": {
+      "primary": "#E85D2C",
+      "teal": "#1A8A8A",
+      "white": "#FFFFFF",
+      "black": "#000000"
+    },
+    "palette_text": "STRICT 4-color palette ONLY: orange-red #E85D2C, teal #1A8A8A, white #FFFFFF, black #000000",
+    "identity": "Mobile e-commerce marketplace Congo DRC. Friendly, modern, product-focused.",
+    "design_rules": {
+      "style": "Modern app marketing, flat design with subtle depth, e-commerce product card",
+      "max_colors": 4,
+      "allowed_colors": ["#E85D2C", "#1A8A8A", "#FFFFFF", "#000000"],
+      "forbidden": ["blue", "purple", "green", "yellow", "pink", "gradient rainbow", "more than 4 colors", "busy background"],
+      "background": "Solid orange #E85D2C dominant (70%) with teal #1A8A8A accent corner (15%) — mirror app icon layout",
+      "typography": "Bold white sans-serif on orange, price in large white numerals, minimal text",
+      "composition": "Product hero center, curved black divider optional, teal corner accent top-right, UZAAPP feel",
+      "mood": "Energetic but controlled, mobile-first, clean marketplace — never chaotic multicolor"
+    }
+  },
+  "INVESTEE_GROUP": {
+    "name": "Investee Group",
+    "site": "investee-group.com",
+    "logo_file": "investee.png",
+    "colors": {
+      "primary": "#268FA5",
+      "black": "#000000",
+      "white": "#FFFFFF"
+    },
+    "palette_text": "MONOCHROME teal palette ONLY: teal cyan #268FA5, black #000000, white #FFFFFF — no other hues",
+    "identity": "B2B NTIC consultancy Butembo. Growth, cybersecurity, digital transformation.",
+    "design_rules": {
+      "style": "Corporate minimalist B2B, McKinsey-meets-tech, single-hue discipline",
+      "max_colors": 3,
+      "allowed_colors": ["#268FA5", "#000000", "#FFFFFF"],
+      "forbidden": ["orange", "red", "green", "purple", "yellow", "multicolor", "gradients with multiple hues", "playful colors"],
+      "background": "White #FFFFFF or deep black #000000 with teal accents — never mixed rainbow",
+      "typography": "Geometric bold sans-serif, teal on white or white on black, wide letter-spacing for titles",
+      "composition": "Icon or briefcase motif left, headline right, 70% whitespace, growth chart line in teal only",
+      "mood": "Professional, trustworthy, enterprise-grade — strict teal monochrome"
+    }
+  },
+  "IM_SYSTEM": {
+    "name": "i-m System",
+    "site": "imsystem.investee-group.com",
+    "logo_file": "im-system.png",
+    "colors": {
+      "primary": "#2196F3",
+      "dark": "#1A237E",
+      "white": "#FFFFFF"
+    },
+    "palette_text": "STRICT 3-color palette ONLY: sky blue #2196F3, navy #1A237E, white #FFFFFF",
+    "identity": "SaaS ERP/CRM for Congolese SMEs. Inventory, invoicing, accounting modules.",
+    "design_rules": {
+      "style": "SaaS product marketing, clean UI mockup, dashboard preview",
+      "max_colors": 3,
+      "allowed_colors": ["#2196F3", "#1A237E", "#FFFFFF"],
+      "forbidden": ["orange", "red", "green", "teal", "purple", "yellow", "multicolor UI", "rainbow charts"],
+      "background": "White or light blue tint #E3F2FD — UI elements in blue and navy only",
+      "typography": "Rounded friendly sans for i-m, bold navy for System — match logo bubbly style",
+      "composition": "Dashboard or phone mockup center, blue UI cards, navy headers, white content areas",
+      "mood": "Modern SaaS, approachable business software — blue family only"
+    }
+  }
+}

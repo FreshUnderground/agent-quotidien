@@ -11,7 +11,9 @@ Produis UNIQUEMENT la section INVESTEE-GROUP avec le marqueur exact en première
 Inclure :
 - À faire aujourd'hui (communication B2B)
 - Posts LinkedIn et Facebook (textes complets)
-- Conception d'images (visuel à créer, brief créatif, carrousel 3 slides)
+- Conception d'images (visuel à créer, brief créatif)
+- Bloc `### Image à réaliser aujourd'hui` avec **Sujet**, **Texte sur l'image**, **Ambiance**
+- Jour impair = focus INVESTEE-GROUP entreprise ; jour pair = focus IM-SYSTEM
 - Conseil INVESTEE du jour
 - Priorité du jour
 

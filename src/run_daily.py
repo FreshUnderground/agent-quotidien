@@ -68,8 +68,11 @@ def notify_from_file(path: Path) -> int:
 
     text = path.read_text(encoding="utf-8")
     date_str = datetime.now().strftime("%d/%m/%Y")
+    date_slug = datetime.now().strftime("%Y-%m-%d")
     sections = parse_sections(text)
-    log = dispatch_all_sections(sections, date_str)
+    image_dir = OUTPUT_DIR / "images" / date_slug
+    image_paths = sorted(image_dir.glob("*.png")) if image_dir.exists() else []
+    log = dispatch_all_sections(sections, date_str, image_paths)
     for k, v in log.items():
         print(f"  {k}: {v}")
     errors = [v for v in log.values() if v != "ok"]
@@ -102,6 +105,7 @@ def main() -> int:
 
     try:
         from notify import dispatch_all_sections, parse_sections
+        from images import generate_daily_images
 
         prompt = load_prompt()
         print("Lancement agent Cursor Cloud (API REST)…")
@@ -122,9 +126,17 @@ def main() -> int:
         save_sections(sections, date_str)
         print(f"Sections : {len(sections)} ({', '.join(s.key for s in sections)})")
 
+        image_paths: list[Path] = []
+        try:
+            image_paths = generate_daily_images(sections, date_str)
+            if image_paths:
+                print(f"Visuels : {len(image_paths)} fichier(s) dans output/images/{date_str}/")
+        except Exception as img_err:
+            print(f"AVERTISSEMENT images : {img_err}", file=sys.stderr)
+
         if not args.no_notify:
             display_date = datetime.now().strftime("%d/%m/%Y")
-            log = dispatch_all_sections(sections, display_date)
+            log = dispatch_all_sections(sections, display_date, image_paths)
             print("\nNotifications :")
             for k, v in log.items():
                 print(f"  {k}: {v}")

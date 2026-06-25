@@ -7,8 +7,10 @@ import re
 import smtplib
 import urllib.parse
 import urllib.request
+from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from pathlib import Path
 from typing import NamedTuple
 
 
@@ -82,6 +84,7 @@ def send_email(
     subject: str,
     plain: str,
     html: str | None = None,
+    image_paths: list[Path] | None = None,
 ) -> None:
     host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
     port = int(os.environ.get("SMTP_PORT", "587"))
@@ -92,15 +95,37 @@ def send_email(
     if not all([user, password, to_addr]):
         raise ValueError("SMTP_USER, SMTP_PASSWORD et destinataire requis pour l'email")
 
-    msg = MIMEMultipart("alternative")
+    images = image_paths or []
+    if images:
+        msg = MIMEMultipart("related")
+        alt = MIMEMultipart("alternative")
+        alt.attach(MIMEText(plain, "plain", "utf-8"))
+        if html:
+            alt.attach(MIMEText(html, "html", "utf-8"))
+        msg.attach(alt)
+        for i, img_path in enumerate(images):
+            if not img_path.exists():
+                continue
+            cid = f"img{i}"
+            mime_img = MIMEImage(img_path.read_bytes(), _subtype="png")
+            mime_img.add_header("Content-ID", f"<{cid}>")
+            mime_img.add_header(
+                "Content-Disposition",
+                "attachment",
+                filename=img_path.name,
+            )
+            msg.attach(mime_img)
+    else:
+        msg = MIMEMultipart("alternative")
+        msg.attach(MIMEText(plain, "plain", "utf-8"))
+        if html:
+            msg.attach(MIMEText(html, "html", "utf-8"))
+
     msg["Subject"] = subject
     msg["From"] = from_addr
     msg["To"] = to_addr
-    msg.attach(MIMEText(plain, "plain", "utf-8"))
-    if html:
-        msg.attach(MIMEText(html, "html", "utf-8"))
 
-    with smtplib.SMTP(host, port, timeout=60) as server:
+    with smtplib.SMTP(host, port, timeout=120) as server:
         server.starttls()
         server.login(user, password)
         server.sendmail(from_addr, [to_addr], msg.as_string())
@@ -135,9 +160,16 @@ def send_telegram_group(apikey: str, text: str) -> None:
             raise RuntimeError(f"CallMeBot Telegram groupe : {body}")
 
 
-def telegram_combined_summary(sections: list[BriefingSection], date_str: str) -> str:
+def telegram_combined_summary(
+    sections: list[BriefingSection],
+    date_str: str,
+    image_count: int = 0,
+) -> str:
     """Résumé Telegram — chaque marque équilibrée."""
     lines = [f"📅 Briefing du jour — {date_str}", ""]
+    if image_count > 0:
+        lines.append(f"🖼️ {image_count} visuels joints à l'email (à publier sur les réseaux)")
+        lines.append("")
 
     for s in sections:
         lines.append(f"{s.emoji} {s.title.upper()}")
@@ -222,7 +254,31 @@ def combine_sections_plain(sections: list[BriefingSection], date_str: str) -> st
     return "\n".join(parts)
 
 
-def combine_sections_html(sections: list[BriefingSection], date_str: str) -> str:
+def _images_html_block(image_paths: list[Path]) -> str:
+    if not image_paths:
+        return ""
+    items: list[str] = []
+    for i, p in enumerate(image_paths):
+        if p.exists():
+            items.append(
+                f'<div style="margin:16px 0">'
+                f'<p style="font-size:13px;color:#555">{p.stem.replace("-", " ")}</p>'
+                f'<img src="cid:img{i}" alt="{p.name}" style="max-width:100%;border-radius:8px">'
+                f"</div>"
+            )
+    if not items:
+        return ""
+    return (
+        '<h2 style="color:#1a1a1a;margin-top:28px">🖼️ Visuels du jour (à publier)</h2>'
+        + "\n".join(items)
+    )
+
+
+def combine_sections_html(
+    sections: list[BriefingSection],
+    date_str: str,
+    image_paths: list[Path] | None = None,
+) -> str:
     blocks: list[str] = []
     for s in sections:
         escaped = (
@@ -236,12 +292,14 @@ def combine_sections_html(sections: list[BriefingSection], date_str: str) -> str
             f'<div style="line-height:1.6">{escaped}</div>'
         )
     body = "\n".join(blocks)
+    images_block = _images_html_block(image_paths or [])
     return f"""<!DOCTYPE html>
 <html><body style="font-family:Arial,sans-serif;max-width:720px;margin:auto;padding:20px">
 <h1 style="color:#1a1a1a">📅 Briefing quotidien — {date_str}</h1>
 <p style="color:#555">Kawa Kanzururu · UZAAPP · INVESTEE-GROUP · Appels d'offres</p>
 <hr>
 {body}
+{images_block}
 <hr>
 <p style="color:#888;font-size:12px">Agent quotidien — dieumercikamina@gmail.com</p>
 </body></html>"""
@@ -265,9 +323,16 @@ def _extract_highlights(content: str, max_lines: int = 5) -> list[str]:
     return highlights
 
 
-def whatsapp_combined_summary(sections: list[BriefingSection], date_str: str) -> str:
+def whatsapp_combined_summary(
+    sections: list[BriefingSection],
+    date_str: str,
+    image_count: int = 0,
+) -> str:
     """Résumé WhatsApp — chaque marque a sa part (équilibré)."""
     lines = [f"📅 *Briefing* — {date_str}", ""]
+    if image_count > 0:
+        lines.append(f"🖼️ *{image_count} visuels* joints à votre email (Kawa + UZAAPP + INVESTEE)")
+        lines.append("")
     per_section = 260  # ~4 sections dans 1200 car.
 
     for s in sections:
@@ -284,7 +349,11 @@ def whatsapp_combined_summary(sections: list[BriefingSection], date_str: str) ->
     return text[:1197] + ("…" if len(text) > 1197 else "")
 
 
-def dispatch_all_sections(sections: list[BriefingSection], date_str: str) -> dict[str, str]:
+def dispatch_all_sections(
+    sections: list[BriefingSection],
+    date_str: str,
+    image_paths: list[Path] | None = None,
+) -> dict[str, str]:
     """Envoie le briefing par email, WhatsApp et Telegram (1 message regroupé par défaut)."""
     log: dict[str, str] = {}
     email_to = os.environ.get("NOTIFY_EMAIL", "").strip()
@@ -299,16 +368,21 @@ def dispatch_all_sections(sections: list[BriefingSection], date_str: str) -> dic
     tg_user = os.environ.get("TELEGRAM_USER", "").strip()
     tg_group_key = os.environ.get("TELEGRAM_GROUP_APIKEY", "").strip()
 
+    images = [p for p in (image_paths or []) if p.exists()]
+    img_count = len(images)
+
     if mode == "combined":
         subject = f"📅 Briefing quotidien — {date_str}"
         plain = combine_sections_plain(sections, date_str)
-        html = combine_sections_html(sections, date_str)
-        wa_text = whatsapp_combined_summary(sections, date_str)
-        tg_text = telegram_combined_summary(sections, date_str)
+        if img_count:
+            plain += f"\n\n🖼️ {img_count} visuels joints (Kawa, UZAAPP, INVESTEE-GROUP)."
+        html = combine_sections_html(sections, date_str, images)
+        wa_text = whatsapp_combined_summary(sections, date_str, img_count)
+        tg_text = telegram_combined_summary(sections, date_str, img_count)
 
         if send_email_flag and email_to:
             try:
-                send_email(email_to, subject, plain, html)
+                send_email(email_to, subject, plain, html, image_paths=images)
                 log["email:combined"] = "ok"
             except Exception as e:
                 log["email:combined"] = f"erreur: {e}"
