@@ -106,15 +106,21 @@ def main() -> int:
         prompt = load_prompt()
         print("Lancement agent Cursor Cloud (API REST)…")
         text = run_cloud(prompt, api_key)
+
+        from sections import assemble_full_text, ensure_all_sections
+
+        sections = ensure_all_sections(text, api_key, run_cloud)
+        if len(sections) < 4:
+            print(f"AVERTISSEMENT : seulement {len(sections)}/4 sections", file=sys.stderr)
+        text = assemble_full_text(sections)
         if not text.strip():
             print("AVERTISSEMENT : réponse vide.", file=sys.stderr)
 
         out_path = save_result(text)
         print(f"Fichier : {out_path}")
 
-        sections = parse_sections(text)
         save_sections(sections, date_str)
-        print(f"Sections : {len(sections)}")
+        print(f"Sections : {len(sections)} ({', '.join(s.key for s in sections)})")
 
         if not args.no_notify:
             display_date = datetime.now().strftime("%d/%m/%Y")

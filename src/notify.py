@@ -136,26 +136,15 @@ def send_telegram_group(apikey: str, text: str) -> None:
 
 
 def telegram_combined_summary(sections: list[BriefingSection], date_str: str) -> str:
-    """Résumé Telegram — plus long que WhatsApp (limite ~4000 car.)."""
+    """Résumé Telegram — chaque marque équilibrée."""
     lines = [f"📅 Briefing du jour — {date_str}", ""]
-    budget = 3800
 
     for s in sections:
         lines.append(f"{s.emoji} {s.title.upper()}")
-        lines.append("-" * 30)
-        for line in s.content.split("\n"):
-            t = line.strip().replace("**", "")
-            if not t or t.startswith("<!--"):
-                continue
-            if t.startswith("###"):
-                continue
-            lines.append(t[:200])
-            if len("\n".join(lines)) > budget:
-                lines.append("… (suite dans l'email)")
-                break
+        lines.append("-" * 28)
+        for h in _extract_highlights(s.content, max_lines=8):
+            lines.append(h)
         lines.append("")
-        if len("\n".join(lines)) > budget:
-            break
 
     text = "\n".join(lines).strip()
     return text[:4000]
@@ -258,40 +247,41 @@ def combine_sections_html(sections: list[BriefingSection], date_str: str) -> str
 </body></html>"""
 
 
+def _extract_highlights(content: str, max_lines: int = 5) -> list[str]:
+    """Extrait les lignes les plus utiles d'une section."""
+    highlights: list[str] = []
+    for line in content.split("\n"):
+        t = line.strip().replace("**", "")
+        if not t or t.startswith("<!--") or t.startswith("|--"):
+            continue
+        if t.startswith("#"):
+            continue
+        if t.startswith("##"):
+            highlights.append(f"▸ {t.lstrip('#').strip()}")
+        elif t.startswith("- ") or (":" in t[:50] and not t.startswith("http")):
+            highlights.append(t[:100])
+        if len(highlights) >= max_lines:
+            break
+    return highlights
+
+
 def whatsapp_combined_summary(sections: list[BriefingSection], date_str: str) -> str:
-    """Résumé unique WhatsApp — toutes marques en un message."""
-    lines = [f"📅 *Briefing du jour* — {date_str}", ""]
-    budget = 1100  # limite CallMeBot ~1200
+    """Résumé WhatsApp — chaque marque a sa part (équilibré)."""
+    lines = [f"📅 *Briefing* — {date_str}", ""]
+    per_section = 260  # ~4 sections dans 1200 car.
 
     for s in sections:
-        header = f"{s.emoji} *{s.title}*"
-        block_lines = [header]
-        for line in s.content.split("\n"):
-            t = line.strip().replace("**", "")
-            if not t or t.startswith("<!--"):
-                continue
-            if t.startswith("#"):
-                continue
-            if t.startswith("##"):
-                block_lines.append(f"▸ {t.lstrip('#').strip()}")
-            elif t.startswith("- ") or t.startswith("|"):
-                if not t.startswith("|--"):
-                    block_lines.append(t[:120])
-            elif t.startswith("**") or ":" in t[:40]:
-                block_lines.append(t[:120])
-            if len("\n".join(lines) + "\n" + "\n".join(block_lines)) > budget:
-                block_lines.append("… (détail dans l'email)")
-                break
-        lines.extend(block_lines)
+        lines.append(f"{s.emoji} *{s.title}*")
+        for h in _extract_highlights(s.content, max_lines=4):
+            lines.append(h)
         lines.append("")
-        if len("\n".join(lines)) > budget:
-            lines.append("_Email complet : dieumercikamina@gmail.com_")
+        # Limiter taille totale
+        if len("\n".join(lines)) > 1150:
+            lines.append("_Suite dans l'email_")
             break
 
     text = "\n".join(lines).strip()
-    if len(text) > 1200:
-        text = text[:1197] + "…"
-    return text
+    return text[:1197] + ("…" if len(text) > 1197 else "")
 
 
 def dispatch_all_sections(sections: list[BriefingSection], date_str: str) -> dict[str, str]:

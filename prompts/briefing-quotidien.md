@@ -194,7 +194,17 @@ Date du jour : date réelle d'exécution.
 
 ## Règles globales
 - Français
+- **OBLIGATOIRE : les 4 sections dans l'ordre** — ne pas s'arrêter après Kawa
+- **Max 300 mots par section** pour que tout arrive par email et WhatsApp
 - Ne pas inventer d'AO — sources réelles uniquement
-- Contenus prêts à copier-coller
-- Conseils images **concrets et réalisables** (smartphone ou Canva)
-- Les 4 marqueurs `=== ... ===` sont **obligatoires** pour le découpage automatique
+- Marqueurs exacts obligatoires :
+  - `=== KAWA_KANZURURU ===`
+  - `=== UZAAPP ===`
+  - `=== INVESTEE_GROUP ===`
+  - `=== APPELS_OFFRES ===`
+
+## CHECKLIST finale
+- [ ] KAWA_KANZURURU (café, posts, images)
+- [ ] UZAAPP (produit web + conception visuelle)
+- [ ] INVESTEE_GROUP (posts B2B investee-group.com + visuels)
+- [ ] APPELS_OFFRES (AO IT RDC)
