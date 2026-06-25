@@ -1,41 +1,41 @@
-# ☕ Kawa Kanzururu — 25/06/2026
+# ☕ Kawa Kanzururu — 25 juin 2026
 
 ## À faire aujourd'hui (communication)
-1. Publier un post sur la relance du café robusta au Nord-Kivu (programme FIDA/Rikolto, 12 000 agriculteurs lancé à Beni).
-2. Mettre à jour la page Facebook avec une photo de station de lavage ou de producteurs au pied du Rwenzori.
+1. Publier sur la fin de la « fly crop » (export juin-juillet) et l'arabica Fairtrade du Rwenzori.
+2. Relier l'élan filière café à Beni (relance robusta, 12 000 agriculteurs — mars 2026) au modèle arabica Kawa.
 
 ## Posts réseaux sociaux
 
 ### Facebook
-**Texte :** Depuis Beni, au pied des neiges éternelles du Rwenzori, Kawa Kanzururu cultive un arabica bio et Fairtrade reconnu par Malongo et Rombouts. Avec la relance du robusta dans le Nord-Kivu, notre filière retrouve son élan. ☕🇨🇩
-**Hashtags :** #KawaKanzururu #CaféCongolais #Fairtrade #NordKivu #Beni #Rwenzori
+**Texte :** Fin de fly crop au Rwenzori ☕ Arabica Fairtrade lavé à nos micro-stations. « Café des neiges éternelles » — Beni/Butembo. kawakanzururu.com
+**Hashtags :** #KawaKanzururu #Fairtrade #NordKivu #Rwenzori
 
 ### LinkedIn
-**Texte :** Coopérative Kawa Kanzururu : 2 500+ producteurs, certification bio/Fairtrade, export via Mombasa. Dans un contexte de relance robusta (12 000 bénéficiaires), nous renforçons qualité et commerce équitable. kawakanzururu.com
+**Texte :** Kawa Kanzururu exporte un arabica specialty du Rwenzori. Fairtrade, 2 500+ producteurs, stations de lavage. Fly crop : export juin-juillet. kawakanzururu.com
 
 ### TikTok
-**Script 15-30s :** [Plan serré mains triant cerises] « Ici, à Beni, le café pousse sous les neiges du Rwenzori. » [Plan station de lavage] « Kawa Kanzururu — café bio, Fairtrade, exporté en Europe. » [Plan tasse] « Le bon café congolais, c'est nous. »
+**Script 15-30s :** Cerises → lavage → montagnes brumeuses. Voix : « Au pied des neiges éternelles, notre café Fairtrade voyage vers l'Europe. Kawa Kanzururu. »
 
 ### X
-**Texte :** ☕ Kawa Kanzururu — café des neiges éternelles, Beni/Rwenzori. Bio + Fairtrade. La filière robusta repart au Nord-Kivu. #CaféRDC
+**Texte :** ☕ Fly crop — arabica Fairtrade Rwenzori. Kawa Kanzururu. #Fairtrade #DRCcoffee
 
 ## 🎨 Conception d'images — conseils du jour
 
 ### Image à réaliser aujourd'hui
-- **Sujet :** Producteur tenant cerises de café, mont Rwenzori en arrière-plan
-- **Cadrage :** vertical 9:16 (TikTok/Reels)
-- **Éléments à inclure :** mains au travail, cerises rouges, brume matinale
-- **Ambiance :** matin doré, tons vert forêt + brun café
-- **Texte sur l'image :** « Café des neiges éternelles »
-- **À éviter :** logos torréfacteurs sans autorisation
+- **Sujet :** Cerises triées, mains producteur, brume Rwenzori
+- **Cadrage :** vertical 9:16
+- **Éléments :** cerises, bassin lavage, logo Fairtrade discret
+- **Ambiance :** #5BA3D9, #4CAF50, #5D4037, lumière matin doré
+- **Texte sur l'image :** « Café des neiges éternelles — Fairtrade »
+- **À éviter :** violet, jaune, néon, clip art
 
 ### Idée image #2 (pour la semaine)
-Infographie « Arabica vs Robusta » — carte Nord-Kivu/Ituri + icônes Fairtrade.
+Productrice devant micro-station — accent #E53935 discret.
 
 ## 💡 Conseil communication
-Reliez l'actualité robusta (programme national) à votre histoire locale : Kawa Kanzururu était déjà là avant la relance.
+Valorisez la traçabilité village → export : les acheteurs B2B veulent des histoires mesurables.
 
 ## ⚡ Priorité du jour
-1 post photo authentique producteur + lien kawakanzururu.com
+Publier le visuel fly crop + lien kawakanzururu.com avant 18h.
 
 ---

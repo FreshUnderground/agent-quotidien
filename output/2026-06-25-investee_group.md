@@ -1,39 +1,39 @@
-# 💻 INVESTEE-GROUP — 25/06/2026
+# 💻 INVESTEE-GROUP — 25 juin 2026
 
 ## À faire aujourd'hui (communication & business)
-1. Publier sur la campagne nationale Code du numérique (18/06) — positionner INVESTEE comme partenaire cybersécurité local.
-2. Contacter 2 PME butemboises pour audit sécurité gratuit (lead generation).
+1. Post LinkedIn sur le Plan Numérique RDC 2026-2030 et l'offre INVESTEE.
+2. Contacter 2 PME butemboises pour audit réseau (lead B2B).
 
 ## Posts réseaux sociaux
 
 ### Facebook / LinkedIn
-**Texte :** 🔒 Le gouvernement congolais renforce la cybersécurité via le Code du numérique. INVESTEE-GROUP, votre partenaire NTIC à Butembo, vous accompagne : helpdesk, sécurité réseau, formations, IM-SYSTEM. investee-group.com
+**Texte :** Plan Numérique RDC 2026-2030 : 36 % d'internautes, cybersécurité prioritaire (CERT ARPTC). INVESTEE-GROUP, Butembo — dev, helpdesk, sécurité IT. investee-group.com
 
 ### LinkedIn (version pro B2B)
-**Texte :** La RDC accélère sa gouvernance numérique (ARPTC, CERT sectoriel). INVESTEE-GROUP propose audits cybersécurité, déploiement IM-SYSTEM et formations certifiantes pour PME et institutions. Contactez-nous à Butembo.
+**Texte :** INVESTEE-GROUP accompagne digitalisation entreprises — infra, helpdesk 24/7, formations, IM-SYSTEM. Devis : investee-group.com
 
 ### X
-**Texte :** Code du numérique + cybersécurité = priorité RDC 2026. INVESTEE-GROUP : dev, helpdesk, sécurité, IM-SYSTEM. Butembo 🇨🇩 investee-group.com
+**Texte :** 🖥️ PNN RDC 2026-2030 = opportunités IT. INVESTEE-GROUP : dev · helpdesk · cybersécurité. #DigitalRDC
 
 ## 🎨 Conception d'images — conseils du jour
 
-### Visuel à créer
-- **Type :** bannière LinkedIn service cybersécurité
-- **Message visuel :** « Protégez votre entreprise — Code du numérique 2026 »
-- **Éléments :** logo INVESTEE, icônes cadenas/serveur/code, bleu corporate
-- **Texte sur visuel :** « Cybersécurité & Helpdesk — INVESTEE-GROUP »
-- **Dimensions :** 1200×627 px (LinkedIn)
-- **Brief créatif :** Fond bleu foncé dégradé. Bouclier central avec cadenas. 3 icônes : firewall, backup, formation. CTA « Demandez un audit gratuit ».
+### Image à réaliser aujourd'hui
+- **Sujet :** Bannière LinkedIn cybersécurité (jour impair = INVESTEE-GROUP)
+- **Type :** paysage 1200×628 px
+- **Éléments :** logo, icônes serveur/bouclier/code
+- **Ambiance :** #268FA5, noir, blanc — monochrome corporate
+- **Texte sur l'image :** « Plan Numérique RDC — INVESTEE »
+- **À éviter :** orange, rouge, violet, multicolore
 
 ### Idée carrousel (3 slides)
-1. Slide 1 : « La cybersécurité, c'est la loi » (Code du numérique)
-2. Slide 2 : « Nos services » (helpdesk, sécurité, IM-SYSTEM, formations)
-3. Slide 3 : « Contactez INVESTEE à Butembo » + QR investee-group.com
+1. « 36 % connectés » — Zoom Eco
+2. « Cybersécurité ARPTC 2026 » — CERT
+3. « INVESTEE-GROUP vous accompagne » — CTA
 
 ## 💡 Conseil INVESTEE du jour
-Surfez sur l'actualité Code du numérique pour proposer des audits gratuits — convertissez en contrats de maintenance.
+Positionnez-vous sur conformité données (DPO) : différenciant vs prestataires informels.
 
 ## ⚡ Priorité du jour
-Publier le carrousel cybersécurité + relancer 3 prospects en attente de devis.
+Publier bannière LinkedIn + message 5 décideurs locaux.
 
 ---
