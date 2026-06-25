@@ -1,0 +1,26 @@
+# Test minimal — vérifie que GitHub Actions fonctionne
+name: Test connexion
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Actions fonctionne
+        run: |
+          echo "GitHub Actions est actif !"
+          echo "Date : $(date)"
+          if [ -z "${{ secrets.CURSOR_API_KEY }}" ]; then
+            echo "::warning::CURSOR_API_KEY pas encore configure dans Settings > Secrets"
+          else
+            echo "CURSOR_API_KEY : configure (OK)"
+          fi
+          if [ -z "${{ secrets.SMTP_PASSWORD }}" ]; then
+            echo "::warning::SMTP_PASSWORD pas encore configure"
+          else
+            echo "SMTP_PASSWORD : configure (OK)"
+          fi
