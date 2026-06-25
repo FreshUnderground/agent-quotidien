@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 import os
 import re
+import urllib.parse
+import urllib.request
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -66,6 +68,7 @@ class ImageBrief:
     product_name: str = ""
     price: str = ""
     alt_text: str = ""
+    product_image_url: str = ""
 
 
 def _extract_field(content: str, label: str) -> str:
@@ -117,6 +120,46 @@ def _extract_overlay_text(content: str) -> str:
     return ""
 
 
+def _product_block_core(block: str) -> str:
+    """Limite le bloc au produit seul (sans fiches créatives suivantes)."""
+    nested = re.search(r"\n###\s+(?!Produit\s+\d)", block, re.IGNORECASE)
+    return block[: nested.start()] if nested else block
+
+
+def _normalize_product_image_url(url: str) -> str:
+    url = url.strip()
+    if not url.startswith("http"):
+        return ""
+    if "storage.googleapis.com" in url and "uzaapp.com/api/proxy" not in url:
+        return "https://uzaapp.com/api/proxy.php?url=" + urllib.parse.quote(url, safe="")
+    return url
+
+
+def _download_product_image(url: str, cache_path: Path) -> Path | None:
+    url = _normalize_product_image_url(url)
+    if not url:
+        return None
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    if cache_path.exists() and cache_path.stat().st_size > 500:
+        return cache_path
+    try:
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (compatible; agent-quotidien/1.0)",
+                "Accept": "image/*,*/*",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=45) as resp:
+            data = resp.read()
+        if len(data) < 500:
+            return None
+        cache_path.write_bytes(data)
+        return cache_path if _is_valid_image(cache_path) else None
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, OSError):
+        return None
+
+
 def _extract_uzaapp_accroche(content: str, product_num: int) -> str:
     fiche = re.search(
         rf"###\s*Fiche créative\s+Produit\s+{product_num}\s*(.*?)(?=\n###|\n## |\Z)",
@@ -137,15 +180,26 @@ def _extract_products(content: str) -> list[dict[str, str]]:
         if not num_match:
             continue
         product_num = int(num_match.group(1))
-        name = _extract_field(block, "Nom")
+        core = _product_block_core(block)
+        name = _extract_field(core, "Nom")
         if not name:
             continue
-        price = _extract_field(block, "Prix indicatif") or _extract_field(block, "Prix")
+        price = _extract_field(core, "Prix indicatif") or _extract_field(core, "Prix")
+        image_url = (
+            _extract_field(core, "URL image produit")
+            or _extract_field(core, "Image produit")
+            or _extract_field(core, "URL image")
+        )
         accroche = (
-            _extract_field(block, "Texte accroche")
+            _extract_field(core, "Texte accroche")
             or _extract_uzaapp_accroche(content, product_num)
         )
-        products.append({"name": name, "price": price, "accroche": accroche})
+        products.append({
+            "name": name,
+            "price": price,
+            "accroche": accroche,
+            "image_url": image_url,
+        })
         if len(products) >= 2:
             break
 
@@ -155,7 +209,16 @@ def _extract_products(content: str) -> list[dict[str, str]]:
             start = match.start()
             chunk = content[start : start + 600]
             price = _extract_field(chunk, "Prix indicatif") or _extract_field(chunk, "Prix")
-            products.append({"name": name, "price": price, "accroche": ""})
+            image_url = (
+                _extract_field(chunk, "URL image produit")
+                or _extract_field(chunk, "Image produit")
+            )
+            products.append({
+                "name": name,
+                "price": price,
+                "accroche": "",
+                "image_url": image_url,
+            })
             if len(products) >= 2:
                 break
     return products
@@ -190,13 +253,14 @@ def build_briefs_from_sections(sections: list, date_str: str | None = None) -> l
         content = section_map["UZAAPP"]
         products = _extract_products(content)
         if not products:
-            products = [{"name": "Produit UZAAPP", "price": "", "accroche": ""}]
+            products = [{"name": "Produit UZAAPP", "price": "", "accroche": "", "image_url": ""}]
         for i, prod in enumerate(products[:2], start=1):
             name = prod["name"]
             price = prod["price"]
+            image_url = prod.get("image_url", "")
             accroche = prod.get("accroche") or ""
             if not accroche and price:
-                accroche = f"{name} — {price}"
+                accroche = f"{name} — {price} $"
             elif not accroche:
                 accroche = name
             briefs.append(
@@ -207,6 +271,7 @@ def build_briefs_from_sections(sections: list, date_str: str | None = None) -> l
                     subtitle=name,
                     product_name=name,
                     price=price,
+                    product_image_url=image_url,
                     alt_text=f"UZAAPP — {name}",
                 )
             )
@@ -240,7 +305,24 @@ def build_briefs_from_sections(sections: list, date_str: str | None = None) -> l
     return briefs
 
 
-def _render_template(brief: ImageBrief, out_path: Path) -> None:
+def _slugify(name: str) -> str:
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", name.lower()).strip("-")
+    return slug[:40] or "produit"
+
+
+def _resolve_product_photo(brief: ImageBrief, date_slug: str) -> Path | None:
+    if not brief.product_image_url:
+        return None
+    ext = ".jpg"
+    if re.search(r"\.png", brief.product_image_url, re.I):
+        ext = ".png"
+    elif re.search(r"\.webp", brief.product_image_url, re.I):
+        ext = ".webp"
+    cache = ROOT / "output" / "images" / date_slug / "products" / f"{_slugify(brief.product_name)}{ext}"
+    return _download_product_image(brief.product_image_url, cache)
+
+
+def _render_template(brief: ImageBrief, out_path: Path, date_slug: str = "") -> None:
     from visual_templates import (
         render_im_system,
         render_investee,
@@ -252,12 +334,14 @@ def _render_template(brief: ImageBrief, out_path: Path) -> None:
     if brief.key == "KAWA_KANZURURU":
         render_kawa(out_path, brief.headline, brief.subtitle, logo)
     elif brief.key == "UZAAPP":
+        product_photo = _resolve_product_photo(brief, date_slug) if date_slug else None
         render_uzaapp(
             out_path,
             brief.product_name or brief.subtitle,
             brief.price,
             brief.headline,
             logo,
+            product_photo,
         )
     elif brief.key == "IM_SYSTEM":
         render_im_system(out_path, brief.headline, brief.subtitle, logo)
@@ -277,7 +361,8 @@ def generate_image(brief: ImageBrief, out_path: Path, seed: int = 42) -> None:
             "(IA photo désactivée : mains/corps flous ou dupliqués). Template pro utilisé."
         )
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    _render_template(brief, out_path)
+    date_slug = out_path.parent.name
+    _render_template(brief, out_path, date_slug)
 
 
 def generate_daily_images(
@@ -296,15 +381,24 @@ def generate_daily_images(
         print("GENERATE_IMAGES=false — visuels ignorés.")
         return []
 
-    print(f"Génération de {len(briefs)} visuel(s) graphiques (templates Pillow)…")
+    print(f"Génération de {len(briefs)} visuel(s) marketing…")
     paths: list[Path] = []
     for i, brief in enumerate(briefs):
         out_path = out_dir / brief.filename
         try:
             generate_image(brief, out_path, seed=1000 + i)
             paths.append(out_path)
+            if brief.key == "UZAAPP" and not brief.product_image_url:
+                print(f"  INFO {brief.filename} : ajoutez **URL image produit** (uzaapp.com) pour la photo réelle")
         except Exception as e:
             print(f"  AVERTISSEMENT : {brief.filename} — {e}")
+
+    try:
+        from creative_briefs import generate_creative_briefs
+
+        generate_creative_briefs(sections, date_slug)
+    except Exception as e:
+        print(f"  AVERTISSEMENT briefs créateur : {e}")
 
     manifest = out_dir / "manifest.json"
     manifest.write_text(
@@ -317,6 +411,7 @@ def generate_daily_images(
                     "headline": b.headline,
                     "product": b.product_name,
                     "price": b.price,
+                    "product_image_url": b.product_image_url,
                 }
                 for p, b in zip(paths, briefs[: len(paths)])
             ],

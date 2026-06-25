@@ -80,6 +80,7 @@ Date du jour : date réelle d'exécution.
 - **Nom :** … (nom exact sur uzaapp.com)
 - **Source / site :** uzaapp.com
 - **Prix indicatif :** … (prix affiché sur uzaapp.com)
+- **URL image produit :** … (lien direct .jpg/.png de la photo catalogue — obligatoire)
 - **Pourquoi pour UZAAPP :** …
 
 ### Produit 2 (optionnel)
@@ -199,7 +200,7 @@ Date du jour : date réelle d'exécution.
 - **OBLIGATOIRE : les 4 sections dans l'ordre** — ne pas s'arrêter après Kawa
 - **Max 300 mots par section** pour que tout arrive par email et WhatsApp
 - Ne pas inventer d'AO — sources réelles uniquement
-- **Visuels automatiques (agent) :** templates graphiques Pillow uniquement — formes, texte FR net, charte stricte. **Jamais de photo IA** (mains/corps flous ou dupliqués). **Pas de personnes, pas de mains** sur les visuels auto. Pour Kawa : montagnes, cerises, texte du jour. Photos avec producteurs/mains = **à capturer sur le terrain**, pas générées par l'agent.
+- **Visuels automatiques (agent) :** ébauches marketing + **photo produit réelle** pour UZAAPP (URL catalogue). Fichier **`briefs-createur.md`** = orientations détaillées pour visuels réalistes dans Canva. **Jamais de photo IA** (mains/corps flous). Kawa/INVESTEE : photos terrain ou screenshots réels.
 - Ne pas mentionner de scripts ou dossiers inexistants (`generate_visuals.py`, `output/visuals/`). Les fichiers réels sont dans `output/images/YYYY-MM-DD/`.
 - **UZAAPP :** produits et prix **uniquement depuis uzaapp.com** ; nom et prix du briefing = texte exact sur le visuel généré.
 - **INVESTEE alternance :** jour impair = visuel entreprise INVESTEE-GROUP ; jour pair = visuel IM-SYSTEM (imsystem.investee-group.com)

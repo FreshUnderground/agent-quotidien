@@ -168,7 +168,8 @@ def telegram_combined_summary(
     """Résumé Telegram — chaque marque équilibrée."""
     lines = [f"📅 Briefing du jour — {date_str}", ""]
     if image_count > 0:
-        lines.append(f"🖼️ {image_count} visuels joints à l'email (à publier sur les réseaux)")
+        lines.append(f"🖼️ {image_count} ébauches visuelles jointes à l'email")
+        lines.append("📋 Guide créateur marketing : output/images/[date]/briefs-createur.md")
         lines.append("")
 
     for s in sections:
@@ -331,7 +332,7 @@ def whatsapp_combined_summary(
     """Résumé WhatsApp — chaque marque a sa part (équilibré)."""
     lines = [f"📅 *Briefing* — {date_str}", ""]
     if image_count > 0:
-        lines.append(f"🖼️ *{image_count} visuels* joints à votre email (Kawa + UZAAPP + INVESTEE)")
+        lines.append(f"🖼️ *{image_count} ébauches* + guide *briefs-createur.md* (visuels réalistes à concevoir)")
         lines.append("")
     per_section = 260  # ~4 sections dans 1200 car.
 
@@ -375,7 +376,7 @@ def dispatch_all_sections(
         subject = f"📅 Briefing quotidien — {date_str}"
         plain = combine_sections_plain(sections, date_str)
         if img_count:
-            plain += f"\n\n🖼️ {img_count} visuels joints (Kawa, UZAAPP, INVESTEE-GROUP)."
+            plain += f"\n\n🖼️ {img_count} ébauches visuelles + guide briefs-createur.md (marketing réaliste)."
         html = combine_sections_html(sections, date_str, images)
         wa_text = whatsapp_combined_summary(sections, date_str, img_count)
         tg_text = telegram_combined_summary(sections, date_str, img_count)

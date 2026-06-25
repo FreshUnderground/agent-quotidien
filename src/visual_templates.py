@@ -238,12 +238,55 @@ def render_kawa(
     img.save(out_path, "PNG", optimize=True)
 
 
+def _paste_product_photo(
+    canvas: Image.Image,
+    photo_path: Path,
+    box: tuple[int, int, int, int],
+) -> None:
+    """Photo produit réelle — centrée, fond blanc, style pub e-commerce."""
+    x0, y0, x1, y1 = box
+    card_w, card_h = x1 - x0, y1 - y0
+    overlay = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+    od = ImageDraw.Draw(overlay)
+    od.rounded_rectangle([x0, y0, x1, y1], radius=24, fill=(255, 255, 255, 255))
+    canvas_rgba = canvas.convert("RGBA")
+    canvas_rgba = Image.alpha_composite(canvas_rgba, overlay)
+    canvas.paste(canvas_rgba.convert("RGB"))
+
+    photo = Image.open(photo_path).convert("RGBA")
+    pad = 28
+    inner_w, inner_h = card_w - 2 * pad, card_h - 2 * pad
+    ratio = min(inner_w / photo.width, inner_h / photo.height)
+    tw, th = int(photo.width * ratio), int(photo.height * ratio)
+    photo = photo.resize((tw, th), Image.Resampling.LANCZOS)
+    px = x0 + (card_w - tw) // 2
+    py = y0 + (card_h - th) // 2
+    if photo.mode == "RGBA":
+        canvas.paste(photo, (px, py), photo)
+    else:
+        canvas.paste(photo.convert("RGB"), (px, py))
+
+
+def _draw_photo_placeholder(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int]) -> None:
+    x0, y0, x1, y1 = box
+    draw.rounded_rectangle([x0, y0, x1, y1], radius=24, fill=(255, 255, 255))
+    draw.rounded_rectangle([x0, y0, x1, y1], radius=24, outline=(0, 0, 0), width=2)
+    hint_font = _font(26, bold=False)
+    lines = ["Photo produit", "uzaapp.com", "→ briefs-createur.md"]
+    cy = y0 + (y1 - y0) // 2 - 40
+    for line in lines:
+        tw = draw.textlength(line, font=hint_font)
+        _draw_text_crisp(draw, (x0 + (x1 - x0 - tw) // 2, cy), line, hint_font, (80, 80, 80))
+        cy += 34
+
+
 def render_uzaapp(
     out_path: Path,
     product_name: str,
     price: str,
     headline: str,
     logo_path: Path | None,
+    product_photo_path: Path | None = None,
 ) -> None:
     orange = _hex_to_rgb("#E85D2C")
     teal = _hex_to_rgb("#1A8A8A")
@@ -254,30 +297,38 @@ def render_uzaapp(
     draw.polygon([(SIZE, 0), (SIZE - 280, 0), (SIZE, 280)], fill=teal)
     draw.ellipse([(SIZE - 120, 40), (SIZE - 60, 100)], fill=(255, 255, 255))
 
-    # Séparateur courbe discret (sans fil noir)
+    # Séparateur courbe discret
     draw.arc([MARGIN - 40, 120, SIZE - MARGIN + 40, 280], start=200, end=340, fill=(0, 0, 0), width=4)
 
-    _draw_phone_icon(draw, SIZE // 2, 340, scale=1.4)
+    # Zone hero : photo produit réelle ou consigne créateur
+    hero_box = (MARGIN, 100, SIZE - MARGIN, 500)
+    if product_photo_path and product_photo_path.exists():
+        _paste_product_photo(img, product_photo_path, hero_box)
+        print(f"    Photo produit : {product_photo_path.name}")
+    else:
+        _draw_photo_placeholder(draw, hero_box)
 
     product_name = _clean_fr(product_name)
     price = _clean_fr(price) if price else ""
     headline = _clean_fr(headline)
+    if price and "$" not in price and "€" not in price and "FC" not in price.upper():
+        price = f"{price} $"
     max_w = SIZE - 2 * MARGIN
 
-    # Nom produit — taille adaptée, texte exact du catalogue uzaapp.com
-    name_font = _font_fit(draw, product_name, max_w, 58, bold=True, min_size=36)
+    # Nom + prix sous la photo (style pub marketing)
+    name_font = _font_fit(draw, product_name, max_w, 44, bold=True, min_size=28)
     lines = _wrap_text(draw, product_name, name_font, max_w)
-    y = 480
+    y = 520
     y = _draw_multiline(
         draw, MARGIN, y, lines[:2], name_font, (255, 255, 255),
         outline=(0, 0, 0), spacing=4,
     )
 
     if price:
-        price_font = _font_fit(draw, price, max_w, 80, bold=True, min_size=48)
+        price_font = _font_fit(draw, price, max_w, 64, bold=True, min_size=40)
         _draw_text_crisp(
-            draw, (MARGIN, y + 16), price, price_font, (255, 255, 255),
-            outline=(0, 0, 0), outline_width=3,
+            draw, (MARGIN, y + 8), price, price_font, (255, 255, 255),
+            outline=(0, 0, 0), outline_width=2,
         )
 
     # CTA : nom + prix + uzaapp.com
