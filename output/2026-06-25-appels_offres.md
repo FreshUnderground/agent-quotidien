@@ -4,32 +4,28 @@
 
 | Réf | Objet | Client | Date limite | Éligibilité INVESTEE | Lien |
 |-----|-------|--------|-------------|----------------------|------|
-| 10026826 / PN G-012254-03 | Acquisition tablettes (61), ordinateurs (27), kits internet satellite (17) — 3 lots | GIZ GmbH — Bureau Kinshasa | **25/06/2026** (AUJOURD'HUI) | ✅ | https://www.congoquotidien.com/2026/06/10/actualite-rdc-acquisition-equipements-informatiques-giz/ |
-| CHAI/GW/2026/LOT-02/TABLETTES | Fourniture et livraison de 1 524 tablettes Android + accessoires (DHIS2 Tracker) | CHAI — Clinton Health Access Initiative | **02/07/2026 — 16h00** | ✅ | https://www.congoquotidien.com/2026/06/12/actualite-rdc-tablettes-numeriques-recos-kongo-central-chai/ |
-| ANICNS/AMI/001/SIH/2026 | Homologation des Systèmes d'Information Hospitalier (SIH) — AMI | ANICNS / Ministère Santé | **12/07/2026** | ⚠️ (si éditeur SIH / intégrateur santé) | https://www.congoquotidien.com/2026/06/16/actualite-rdc-homologation-sih-rdc/ |
+| 10026826 | Tablettes (61), ordinateurs (27), kits satellite (17) | GIZ Kinshasa | **25/06/2026 (AUJOURD'HUI)** | ✅ | [congoquotidien.com](https://www.congoquotidien.com/2026/06/10/actualite-rdc-acquisition-equipements-informatiques-giz/) |
+| UNDP-COD-01238 | Matériels télécom et informatiques | PNUD RDC | 29/06/2026 | ✅ | [congoquotidien.com](https://www.congoquotidien.com/2026/06/10/actualite-rdc-manifestations-interet-pnud/) |
+| ANICNS/AMI/001/SIH/2026 | Homologation SIH (santé numérique) | ANICNS / Min. Santé | 12/07/2026 | ⚠️ (si solution IM-SYSTEM) | [congoquotidien.com](https://www.congoquotidien.com/2026/06/16/actualite-rdc-homologation-sih-rdc/) |
 
 ## Actions immédiates
-1. **URGENT — GIZ 10026826 :** si dossier prêt, envoyer **aujourd'hui** 3 PDF (admin, technique, financier) à **CD_ACHATS_Quotation@giz.de** — objet : `10026826`. Vérifier RCCM, attestations fiscales (fév-avr 2026), CNSS à jour, NIF, RIB.
-2. **CHAI tablettes (02/07) :** télécharger le dossier, préparer tableau de conformité technique point par point (Android 12+, 4G, 7040 mAh, coque MIL-STD, apps DHIS2/Kobo/ODK), calculer garantie bancaire 2 % HT, soumettre physiquement + email **drcprocurement@clintonhealthaccess.org**.
+1. **URGENT** — Finaliser et envoyer l'offre GIZ 10026826 à CD_ACHATS_Quotation@giz.de avant ce soir (3 PDF : admin, technique, financier).
+2. Préparer dossier PNUD UNDP-COD-01238 sur Quantum (deadline 29/06).
 
 ## AO à surveiller (échéance < 7 jours)
-- **GIZ 10026826** — échéance **25/06/2026** (dernier jour) — tablettes, PC, kits satellite Starlink/résidentiel
-- **CHAI/GW/2026/LOT-02** — échéance **02/07/2026** (7 jours) — 1 524 tablettes + accessoires, livraison Kinshasa avant 10/09/2026
-
-## AO expirés récemment (ne plus soumettre)
-- GOVSOC serveurs/licences (UG PTN) — limite 22/06/2026 ❌
-- CNSSAP licences serveurs/BD/antivirus — limite 22/06/2026 ❌
-- SMF IFOD SA — acquisition SIRH — limite 20/06/2026 ❌
+- **GIZ 10026826** — expire aujourd'hui 25/06
+- **PNUD UNDP-COD-01238** — expire 29/06 (4 jours)
+- **PNUD UNDP-COD-01237** (impression) et **UNDP-COD-01217** (mobilier) — expirent aussi 29/06
 
 ## Rappel documents dossier INVESTEE
 - [ ] RCCM, quitus, CNSS à jour
-- [ ] Attestations fiscales DGI (3 derniers mois)
-- [ ] NIF + RIB certifié
-- [ ] Attestation de non-faillite (< 3 mois)
-- [ ] 3 références marchés similaires (2023-2026) avec contacts vérifiables
-- [ ] Garantie bancaire de soumission (montant selon AO)
-- [ ] Copie pièce d'identité représentant légal
+- [ ] Attestations fiscales fév–avr 2026 (exigées GIZ)
+- [ ] RIB et NIF
 
 ---
 
-Sources veille : congoquotidien.com, econewsrdc.com, armp-rdc.org, annonces officielles GIZ/CHAI/ANICNS. Les AO expirés ne sont pas présentés comme actifs.
+**CHECKLIST finale**
+- [x] KAWA_KANZURURU (café, posts, images)
+- [x] UZAAPP (produit web + conception visuelle)
+- [x] INVESTEE_GROUP (posts B2B investee-group.com + visuels)
+- [x] APPELS_OFFRES (AO IT RDC — sources CongoQuotidien vérifiées)
