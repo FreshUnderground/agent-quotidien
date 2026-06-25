@@ -1,0 +1,64 @@
+# Agent quotidien — 100 % hébergé en ligne (GitHub Actions + Cursor Cloud)
+# 6h00 Kinshasa (UTC+1) = 5h00 UTC
+name: Briefing quotidien
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Lancement manuel"
+        required: false
+        default: "test"
+
+permissions:
+  contents: write
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      NOTIFY_MODE: combined
+      SEND_EMAIL: "true"
+      SEND_WHATSAPP: "true"
+      NOTIFY_EMAIL: dieumercikamina@gmail.com
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: "587"
+      SMTP_USER: dieumercikamina@gmail.com
+      SMTP_FROM: dieumercikamina@gmail.com
+      WHATSAPP_PROVIDER: callmebot
+      WHATSAPP_PHONE: "+243975955375"
+      CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Dépendances
+        run: pip install -r requirements.txt
+
+      - name: Agent Cursor Cloud + email + WhatsApp
+        run: python src/run_daily.py --mode cloud
+
+      - name: Archiver le briefing sur GitHub
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "briefing $(date +%Y-%m-%d)"
+          file_pattern: output/*.md
+
+      - name: Résumé
+        if: always()
+        run: |
+          echo "Briefing envoyé à dieumercikamina@gmail.com et +243975955375"
+          ls -la output/ 2>/dev/null || true
