@@ -88,13 +88,9 @@ Date du jour : date réelle d'exécution.
 ## 🎨 Conception visuelle pour UZAAPP
 
 ### Fiche créative Produit 1
-- **Type visuel :** (bannière app / post Instagram / story / catalogue)
-- **Format :** 1080×1080 ou 1080×1920
-- **Composition :** (produit au centre, fond dégradé, mockup téléphone…)
-- **Couleurs suggérées :** …
-- **Texte accroche :** …
-- **CTA :** « Téléchargez UZAAPP » / « Achetez sur UZAAPP »
-- **Brief pour graphiste (ou Canva) :** description détaillée en 5 lignes
+- **Type visuel :** bannière app / post Instagram carré
+- **Format :** 1080×1080
+- **Texte accroche :** phrase courte en français avec le **nom exact** et le **prix** du Produit 1 (ex. « Okapi 16 — 75 $ »)
 
 ### Posts réseaux pour promouvoir ce produit via UZAAPP
 
@@ -198,7 +194,7 @@ Date du jour : date réelle d'exécution.
 - **OBLIGATOIRE : les 4 sections dans l'ordre** — ne pas s'arrêter après Kawa
 - **Max 300 mots par section** pour que tout arrive par email et WhatsApp
 - Ne pas inventer d'AO — sources réelles uniquement
-- **Visuels automatiques :** chaque section Kawa, UZAAPP et INVESTEE doit inclure un bloc `### Image à réaliser aujourd'hui` avec **Sujet**, **Texte sur l'image** et **Ambiance** (couleurs) — l'agent génère 4 PNG/jour (1 Kawa + 2 UZAAPP + 1 INVESTEE) et les envoie par email
+- **Visuels automatiques :** templates professionnels Pillow (texte FR lisible, charte stricte, pas d'IA photo). Chaque section doit inclure `### Image à réaliser aujourd'hui` avec **Sujet**, **Texte sur l'image** (français court) et **Ambiance** (codes hex). UZAAPP : le **Nom** et **Prix indicatif** de chaque produit doivent correspondre exactement aux visuels générés.
 - **INVESTEE alternance :** jour impair = visuel entreprise INVESTEE-GROUP ; jour pair = visuel IM-SYSTEM (imsystem.investee-group.com)
 
 ### Charte graphique — OBLIGATOIRE (expert design)
