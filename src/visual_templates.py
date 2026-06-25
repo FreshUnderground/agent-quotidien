@@ -312,7 +312,9 @@ def render_uzaapp(
     price = _clean_fr(price) if price else ""
     headline = _clean_fr(headline)
     if price and "$" not in price and "€" not in price and "FC" not in price.upper():
-        price = f"{price} $"
+        price_display = f"{price} $"
+    else:
+        price_display = price
     max_w = SIZE - 2 * MARGIN
 
     # Nom + prix sous la photo (style pub marketing)
@@ -324,18 +326,18 @@ def render_uzaapp(
         outline=(0, 0, 0), spacing=4,
     )
 
-    if price:
-        price_font = _font_fit(draw, price, max_w, 64, bold=True, min_size=40)
+    if price_display:
+        price_font = _font_fit(draw, price_display, max_w, 64, bold=True, min_size=40)
         _draw_text_crisp(
-            draw, (MARGIN, y + 8), price, price_font, (255, 255, 255),
+            draw, (MARGIN, y + 8), price_display, price_font, (255, 255, 255),
             outline=(0, 0, 0), outline_width=2,
         )
 
     # CTA : nom + prix + uzaapp.com
-    if price and price in headline:
+    if price_display and price_display in headline:
         cta = headline
-    elif price:
-        cta = f"{product_name} — {price}"
+    elif price_display:
+        cta = f"{product_name} — {price_display}"
     else:
         cta = headline or f"Commandez sur uzaapp.com"
 

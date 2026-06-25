@@ -260,7 +260,7 @@ def build_briefs_from_sections(sections: list, date_str: str | None = None) -> l
             image_url = prod.get("image_url", "")
             accroche = prod.get("accroche") or ""
             if not accroche and price:
-                accroche = f"{name} — {price} $"
+                accroche = f"{name} — {price}" if "$" in price else f"{name} — {price} $"
             elif not accroche:
                 accroche = name
             briefs.append(
