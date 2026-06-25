@@ -1,43 +1,41 @@
 # ☕ Kawa Kanzururu — 25 juin 2026
 
 ## À faire aujourd'hui (communication)
-1. Relayer le programme robusta lancé à Beni (12 000 agriculteurs) en lien Fairtrade.
-2. Publier le visuel « neiges éternelles » + rappel traçabilité/RDUE.
+1. Publier un post sur la station de lavage centralisée (3–5 t/an) et le renouvellement des plantules — projet TDC 2025.
+2. Relayer l'actualité filière : programme robusta lancé à Beni (28 fév. 2026, 12 000 agriculteurs) en lien avec la traçabilité RDUE.
 
 ## Posts réseaux sociaux
 
 ### Facebook
-**Texte :** Au Rwenzori, Kawa Kanzururu produit un arabica Fairtrade. Relance robusta à Beni : la filière progresse. Qualité, traçabilité, commerce équitable. ☕ kawakanzururu.com
-**Hashtags :** #KawaKanzururu #Fairtrade #NordKivu #Beni
+**Texte :** Au pied du Rwenzori, Kawa Kanzururu prépare la récolte 2026. Coopérative Fairtrade : qualité uniforme, traçabilité européenne, café des neiges éternelles. ☕🇨🇩 #KawaKanzururu #Fairtrade #NordKivu
+**Hashtags :** #CaféCongolais #Beni #CommerceEquitable #Rwenzori
 
 ### LinkedIn
-**Texte :** 2 500 producteurs arabica, Fairtrade, station de lavage centralisée (TDC 2025). Enjeu : qualité homogène et conformité RDUE pour l’export européen.
+**Texte :** Kawa Kanzururu investit dans une station de lavage centralisée et des plantules certifiées. Objectif : conformité RDUE et accès durable aux marchés européens. kawakanzururu.com
 
 ### TikTok
-**Script 15-30s :** Montagne → cerises → « Fairtrade · Beni » → « Qualité Rwenzori » → kawakanzururu.com
+**Script 15-30s :** [Plan 1] Carte Beni/Rwenzori. [Voix off] « Ici, le café pousse au pied des neiges éternelles. » [Plan 2] Cerises de café. « Kawa Kanzururu : 2 500 producteurs arabica, certifié Fairtrade. » [Plan 3] Logo coop. « Qualité, traçabilité, avenir vert. »
 
 ### X
-**Texte :** ☕ Arabica Fairtrade du Rwenzori. Relance robusta Beni : filière en mouvement. kawakanzururu.com
+**Texte :** ☕ Kawa Kanzururu — récolte 2026 en cours au Nord-Kivu. Fairtrade · traçabilité RDUE · café des neiges éternelles. #KawaKanzururu #RDC
 
 ## 🎨 Conception d'images — conseils du jour
 
 ### Image à réaliser aujourd'hui
-- **Sujet :** Montagnes enneigées + cerises stylisées
-- **Cadrage :** vertical 9:16
-- **Éléments à inclure :** pics Rwenzori, cerises, bandeau texte
-- **Ambiance :** #5BA3D9, #4CAF50, #5D4037, #E53935, blanc, noir
-- **Texte sur l'image :** « Café des neiges éternelles · Fairtrade »
-- **À éviter :** couleurs hors charte, photos IA, personnes/mains
-
-**Visuel :** `output/images/2026-06-25/kawa_kanzururu_2026-06-25.png`
+- **Sujet :** Silhouette montagne Rwenzori + cerises de café stylisées
+- **Cadrage :** carré 1:1 (1080×1080)
+- **Éléments à inclure :** logo Kawa, badge Fairtrade, courbe de traçabilité
+- **Ambiance :** bleu #5BA3D9, vert #4CAF50, brun #5D4037, blanc, noir — pas de photo réaliste
+- **Texte sur l'image :** « Récolte 2026 · Café des neiges éternelles »
+- **À éviter :** violet, jaune, néon, personnes, mains, couleurs hors charte
 
 ### Idée image #2 (pour la semaine)
-Carrousel : station de lavage, carte Beni/Rwenzori, label Fairtrade.
+Infographie RDUE : 3 étapes (géolocalisation → station de lavage → export Fairtrade).
 
 ## 💡 Conseil communication
-Croisez l’actualité robusta avec votre différenciation arabica : complémentarité, pas concurrence.
+Reliez chaque post à un bénéfice concret pour le producteur (prix juste, renouvellement des plantations).
 
 ## ⚡ Priorité du jour
-Visuel vertical + post Facebook avant 18h.
+Mettre en avant la conformité RDUE avant la prochaine campagne d'export.
 
 ---

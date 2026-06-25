@@ -1,34 +1,38 @@
 [
   {
     "file": "2026-06-25-kawa.png",
-    "brief": "Kawa Kanzururu — Café des neiges éternelles · Fairtrade",
+    "brief": "Kawa Kanzururu — Récolte 2026 · Café des neiges éternelles",
     "key": "KAWA_KANZURURU",
-    "headline": "Café des neiges éternelles · Fairtrade",
+    "headline": "Récolte 2026 · Café des neiges éternelles",
     "product": "",
-    "price": ""
+    "price": "",
+    "product_image_url": ""
   },
   {
     "file": "2026-06-25-uzaapp-produit1.png",
     "brief": "UZAAPP — Kit mini Starlink",
     "key": "UZAAPP",
-    "headline": "Kit mini Starlink — 320 $",
+    "headline": "Kit mini Starlink — 320.00 $",
     "product": "Kit mini Starlink",
-    "price": "320"
+    "price": "320.00 $",
+    "product_image_url": "https://uzaapp.com/uploads/produits/1780924589_97ef047b79f53283.jpg"
   },
   {
     "file": "2026-06-25-uzaapp-produit2.png",
-    "brief": "UZAAPP — NanoStation M2",
+    "brief": "UZAAPP — XPRINTER",
     "key": "UZAAPP",
-    "headline": "Kit mini Starlink — 320 $",
-    "product": "NanoStation M2",
-    "price": "115"
+    "headline": "XPRINTER — 100.00 $ $",
+    "product": "XPRINTER",
+    "price": "100.00 $",
+    "product_image_url": "https://uzaapp.com/uploads/produits/1780693397_39c0cdfac00a09e9.jpg"
   },
   {
     "file": "2026-06-25-investee-entreprise.png",
     "brief": "INVESTEE-GROUP",
     "key": "INVESTEE_GROUP",
-    "headline": "Cybersécurité & digitalisation · INVESTEE-GROUP",
+    "headline": "INVESTEE-GROUP · investee-group.com",
     "product": "",
-    "price": ""
+    "price": "",
+    "product_image_url": ""
   }
 ]
