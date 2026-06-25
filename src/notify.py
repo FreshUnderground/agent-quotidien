@@ -106,6 +106,61 @@ def send_email(
         server.sendmail(from_addr, [to_addr], msg.as_string())
 
 
+def send_telegram_user(username: str, text: str) -> None:
+    """CallMeBot Telegram — message privé (@username, /start requis sur @CallMeBot_txtbot)."""
+    if len(text) > 4000:
+        text = text[:3997] + "…"
+    user = username if username.startswith("@") else f"@{username}"
+    params = urllib.parse.urlencode({"user": user, "text": text, "html": "no"})
+    url = f"https://api.callmebot.com/text.php?{params}"
+    req = urllib.request.Request(url, method="GET")
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        body = resp.read().decode("utf-8", errors="replace")
+        if "ERROR" in body.upper() or "NOT AUTHORIZED" in body.upper():
+            raise RuntimeError(f"CallMeBot Telegram : {body}")
+
+
+def send_telegram_group(apikey: str, text: str) -> None:
+    """CallMeBot Telegram — message vers un groupe."""
+    if len(text) > 4000:
+        text = text[:3997] + "…"
+    params = urllib.parse.urlencode(
+        {"apikey": apikey, "text": text, "html": "no"}
+    )
+    url = f"https://api.callmebot.com/telegram/group.php?{params}"
+    req = urllib.request.Request(url, method="GET")
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        body = resp.read().decode("utf-8", errors="replace")
+        if "ERROR" in body.upper():
+            raise RuntimeError(f"CallMeBot Telegram groupe : {body}")
+
+
+def telegram_combined_summary(sections: list[BriefingSection], date_str: str) -> str:
+    """Résumé Telegram — plus long que WhatsApp (limite ~4000 car.)."""
+    lines = [f"📅 Briefing du jour — {date_str}", ""]
+    budget = 3800
+
+    for s in sections:
+        lines.append(f"{s.emoji} {s.title.upper()}")
+        lines.append("-" * 30)
+        for line in s.content.split("\n"):
+            t = line.strip().replace("**", "")
+            if not t or t.startswith("<!--"):
+                continue
+            if t.startswith("###"):
+                continue
+            lines.append(t[:200])
+            if len("\n".join(lines)) > budget:
+                lines.append("… (suite dans l'email)")
+                break
+        lines.append("")
+        if len("\n".join(lines)) > budget:
+            break
+
+    text = "\n".join(lines).strip()
+    return text[:4000]
+
+
 def send_whatsapp_callmebot(phone: str, text: str, apikey: str) -> None:
     """CallMeBot — gratuit, inscription sur callmebot.com."""
     if len(text) > 1200:
@@ -240,7 +295,7 @@ def whatsapp_combined_summary(sections: list[BriefingSection], date_str: str) ->
 
 
 def dispatch_all_sections(sections: list[BriefingSection], date_str: str) -> dict[str, str]:
-    """Envoie le briefing par email et WhatsApp (1 message regroupé par défaut)."""
+    """Envoie le briefing par email, WhatsApp et Telegram (1 message regroupé par défaut)."""
     log: dict[str, str] = {}
     email_to = os.environ.get("NOTIFY_EMAIL", "").strip()
     wa_phone = os.environ.get("WHATSAPP_PHONE", "").strip()
@@ -249,12 +304,17 @@ def dispatch_all_sections(sections: list[BriefingSection], date_str: str) -> dic
 
     send_email_flag = os.environ.get("SEND_EMAIL", "true").lower() == "true"
     send_wa_flag = os.environ.get("SEND_WHATSAPP", "true").lower() == "true"
+    send_tg_flag = os.environ.get("SEND_TELEGRAM", "false").lower() == "true"
+    tg_mode = os.environ.get("TELEGRAM_MODE", "user").strip().lower()
+    tg_user = os.environ.get("TELEGRAM_USER", "").strip()
+    tg_group_key = os.environ.get("TELEGRAM_GROUP_APIKEY", "").strip()
 
     if mode == "combined":
         subject = f"📅 Briefing quotidien — {date_str}"
         plain = combine_sections_plain(sections, date_str)
         html = combine_sections_html(sections, date_str)
         wa_text = whatsapp_combined_summary(sections, date_str)
+        tg_text = telegram_combined_summary(sections, date_str)
 
         if send_email_flag and email_to:
             try:
@@ -285,6 +345,21 @@ def dispatch_all_sections(sections: list[BriefingSection], date_str: str) -> dic
                 log["whatsapp:combined"] = "ok"
             except Exception as e:
                 log["whatsapp:combined"] = f"erreur: {e}"
+
+        if send_tg_flag:
+            try:
+                if tg_mode == "group":
+                    if not tg_group_key:
+                        raise ValueError("TELEGRAM_GROUP_APIKEY manquant")
+                    send_telegram_group(tg_group_key, tg_text)
+                else:
+                    if not tg_user:
+                        raise ValueError("TELEGRAM_USER manquant (ex: @votre_pseudo)")
+                    send_telegram_user(tg_user, tg_text)
+                log["telegram:combined"] = "ok"
+            except Exception as e:
+                log["telegram:combined"] = f"erreur: {e}"
+
         return log
 
     # Mode séparé (4 messages) — legacy

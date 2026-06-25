@@ -34,6 +34,9 @@ jobs:
       CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
       SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+      SEND_TELEGRAM: "true"
+      TELEGRAM_MODE: user
+      TELEGRAM_USER: ${{ secrets.TELEGRAM_USER }}
 
     steps:
       - name: Checkout
@@ -60,5 +63,5 @@ jobs:
       - name: Résumé
         if: always()
         run: |
-          echo "Briefing envoyé à dieumercikamina@gmail.com et +243975955375"
+          echo "Briefing → email, WhatsApp, Telegram"
           ls -la output/ 2>/dev/null || true

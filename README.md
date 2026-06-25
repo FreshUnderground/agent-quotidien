@@ -4,7 +4,7 @@ Agent automatique pour **Dieu-Merci Kamina** — chaque matin à **6h Kinshasa**
 
 ## Ce qu'il fait
 
-**1 email** + **1 WhatsApp** regroupant :
+**1 email** + **1 WhatsApp** + **1 Telegram** regroupant :
 
 | Section | Contenu |
 |---------|---------|
@@ -44,6 +44,7 @@ GitHub Actions (gratuit)  →  Cursor Cloud Agent  →  Gmail + WhatsApp
 | `CURSOR_API_KEY` | cursor.com/dashboard |
 | `SMTP_PASSWORD` | Gmail mot de passe application |
 | `CALLMEBOT_APIKEY` | WhatsApp CallMeBot |
+| `TELEGRAM_USER` | Votre pseudo Telegram (ex: `@dieumerci`) |
 
 ---
 
