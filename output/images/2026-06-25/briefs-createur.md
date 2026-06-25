@@ -16,42 +16,42 @@ Les fichiers `.png` auto-générés sont des **ébauches** (texte + charte). Pou
 
 ## UZAAPP
 
-### UZAAPP — Produit 1 : Kit mini Starlink
+### UZAAPP — Produit 1 : POS SUNMI V3
 
 **Format :** 1080×1080 (Instagram/Facebook) ou 1080×1920 (story)
 
 **Objectif :** Pub e-commerce réaliste — le produit doit être **visible et net** (pas une icône).
 
 **Photo produit :**
-**URL image (catalogue) :** https://uzaapp.com/uploads/produits/1780924589_97ef047b79f53283.jpg
+**URL image (catalogue) :** https://uzaapp.com/uploads/produits/1780684268_b1dc3ff2c67fa8ba.jpg
 (Capture ou import directe dans Canva)
 
-**Texte sur le visuel :** Kit mini Starlink — 320.00 $
+**Texte sur le visuel :** POS SUNMI V3 — 120.00 $
 
 **Mise en page recommandée (Canva / Photoshop) :**
 - Zone haute (60 %) : **photo réelle du produit** sur fond blanc ou dégradé léger orange pâle
-- Bandeau bas orange `orange #E85D2C` : nom + **prix 320.00 $** en gros blanc
+- Bandeau bas orange `orange #E85D2C` : nom + **prix 120.00$** en gros blanc
 - Coin haut droit : accent teal #1A8A8A (comme l'icône UZAAPP)
 - Bas : « Commandez sur **uzaapp.com** » + logo UZAAPP
 - **Ne pas** utiliser d'IA pour générer le produit — photo catalogue ou prise studio
 
 **Réseaux :** Facebook (carré), TikTok (vertical avec prix en 3 premières secondes)
 
-### UZAAPP — Produit 2 : XPRINTER
+### UZAAPP — Produit 2 : IPCAM HIKVISION 4MP
 
 **Format :** 1080×1080 (Instagram/Facebook) ou 1080×1920 (story)
 
 **Objectif :** Pub e-commerce réaliste — le produit doit être **visible et net** (pas une icône).
 
 **Photo produit :**
-**URL image (catalogue) :** https://uzaapp.com/uploads/produits/1780693397_39c0cdfac00a09e9.jpg
+**URL image (catalogue) :** https://uzaapp.com/uploads/produits/1780831263_07d904476a6682e4.jpg
 (Capture ou import directe dans Canva)
 
-**Texte sur le visuel :** XPRINTER — 100.00 $ $
+**Texte sur le visuel :** IPCAM HIKVISION 4MP — 80.00$ $
 
 **Mise en page recommandée (Canva / Photoshop) :**
 - Zone haute (60 %) : **photo réelle du produit** sur fond blanc ou dégradé léger orange pâle
-- Bandeau bas orange `orange #E85D2C` : nom + **prix 100.00 $** en gros blanc
+- Bandeau bas orange `orange #E85D2C` : nom + **prix 80.00$** en gros blanc
 - Coin haut droit : accent teal #1A8A8A (comme l'icône UZAAPP)
 - Bas : « Commandez sur **uzaapp.com** » + logo UZAAPP
 - **Ne pas** utiliser d'IA pour générer le produit — photo catalogue ou prise studio
@@ -64,9 +64,9 @@ Les fichiers `.png` auto-générés sont des **ébauches** (texte + charte). Pou
 
 **Objectif :** Marketing authentique café Fairtrade — **photo terrain de préférence**.
 
-**Texte sur le visuel :** Récolte 2026 · Café des neiges éternelles
+**Texte sur le visuel :** Traçabilité RDUE — Café des neiges éternelles
 
-**Sujet / angle :** Silhouette montagne Rwenzori + cerises de café stylisées
+**Sujet / angle :** Silhouette Rwenzori + branche cerise de café + icône GPS/traçabilité
 
 **À photographier sur place (réaliste) :**
 - Mains triant des cerises rouges à la MSL (cadrage serré, lumière naturelle)
@@ -83,7 +83,7 @@ Les fichiers `.png` auto-générés sont des **ébauches** (texte + charte). Pou
 
 **Objectif :** Crédibilité B2B NTIC Butembo — photo réelle ou visuel corporate sobre.
 
-**Texte sur le visuel :** INVESTEE-GROUP · investee-group.com
+**Texte sur le visuel :** PNN 2026-2030 — Cybersécurité & Helpdesk
 
 **Message :** Solutions NTIC
 
