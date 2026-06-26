@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    (function () {
+      var hash = window.location.hash || '';
+      if (hash.indexOf('#/') === 0 && hash.length > 2) {
+        history.replaceState(null, '', hash.slice(1));
+      }
+    })();
+  </script>
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Uzaapp - Votre hub de commerce local. Trouvez les meilleures boutiques et produits près de chez vous.">
+  <meta name="keywords" content="commerce, local, boutiques, produits, uzaapp, achat, vente">
+  <meta name="theme-color" content="#FE3E00">
+
+  <!-- Cache: rely on service worker + APP_VERSION bump instead of no-store (slow SW boot). -->
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://uzaapp.com/">
+  <meta property="og:title" content="Uzaapp - Hub de Commerce Local">
+  <meta property="og:description" content="Découvrez les produits et boutiques locaux sur Uzaapp. Connectez-vous directement avec les vendeurs.">
+  <meta property="og:image" content="https://uzaapp.com/icons/Icon-512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://uzaapp.com/">
+  <meta property="twitter:title" content="Uzaapp - Hub de Commerce Local">
+  <meta property="twitter:description" content="Découvrez les produits et boutiques locaux sur Uzaapp.">
+  <meta property="twitter:image" content="https://uzaapp.com/icons/Icon-512.png">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="uzaapp">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Uzaapp</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Google Fonts Preload -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- sql.js is required for Drift web -->
+  <script src="sql-wasm.js"></script>
+
+  <!-- Version Control & Force Update System -->
+  <script>
+    const APP_VERSION = "2.0.6";
+    const STORAGE_VERSION_KEY = "uzaapp_version";
+
+    // Check for old version
+    const oldVersion = localStorage.getItem(STORAGE_VERSION_KEY);
+
+    if (oldVersion && oldVersion !== APP_VERSION) {
+      console.log(`Uzaapp: Version change detected (${oldVersion} -> ${APP_VERSION})`);
+
+      // Clear only Flutter app shell caches — keep image/media caches for speed
+      if ('caches' in window) {
+        caches.keys().then(names => {
+          for (let name of names) {
+            const lower = name.toLowerCase();
+            const isAppShell =
+              lower.includes('flutter') ||
+              lower.includes('uzaapp-app') ||
+              lower.includes('workbox');
+            if (isAppShell) {
+              caches.delete(name);
+              console.log(`Uzaapp: App cache deleted: ${name}`);
+            }
+          }
+        });
+      }
+
+      // Clear service worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+            console.log('Uzaapp: Service worker unregistered');
+          }
+        });
+      }
+
+      // Block app and show update screen
+      document.body.innerHTML = `
+        <div style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          flex-direction: column;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          padding: 20px;
+          background: linear-gradient(135deg, #FE3E00 0%, #ff6b3d 100%);
+          color: white;
+        ">
+          <div style="
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 90%;
+          ">
+            <div style="font-size: 60px; margin-bottom: 20px;">🔄</div>
+            <h1 style="margin-bottom: 15px; color: #FE3E00;">Nouvelle version disponible</h1>
+            <p style="margin-bottom: 25px; font-size: 16px; line-height: 1.6; color: #666;">
+              Uzaapp a été mis à jour avec des améliorations importantes.<br>
+              Veuillez recharger l'application pour profiter de la nouvelle version.
+            </p>
+            <button onclick="forceUpdate()" style="
+              padding: 15px 30px;
+              border: none;
+              border-radius: 12px;
+              background: #FE3E00;
+              color: white;
+              font-size: 18px;
+              font-weight: bold;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              box-shadow: 0 4px 15px rgba(254, 62, 0, 0.4);
+            " onmouseover="this.style.background='#e03600'; this.style.transform='translateY(-2px)'" 
+               onmouseout="this.style.background='#FE3E00'; this.style.transform='translateY(0)'">
+              🚀 Mettre à jour maintenant
+            </button>
+          </div>
+        </div>
+      `;
+
+      function forceUpdate() {
+        localStorage.setItem(STORAGE_VERSION_KEY, APP_VERSION);
+        window.location.reload(true);
+      }
+    }
+
+    // Save current version
+    localStorage.setItem(STORAGE_VERSION_KEY, APP_VERSION);
+
+    // WhatsApp status daily reminder (24h30) — works when PWA/tab is open
+    (function initWaStatusReminder() {
+      const NEXT_KEY = 'uzaapp_wa_status_next_at';
+      const LAST_NOTIFIED_KEY = 'uzaapp_wa_status_last_notified_at';
+      const INTERVAL_MS = (24 * 60 + 30) * 60 * 1000;
+
+      function showWaStatusNotification() {
+        if (!('Notification' in window)) return;
+        if (Notification.permission !== 'granted') return;
+        const now = Date.now();
+        const last = localStorage.getItem(LAST_NOTIFIED_KEY);
+        if (last && (now - Date.parse(last)) < 60000) return;
+        localStorage.setItem(LAST_NOTIFIED_KEY, new Date().toISOString());
+        const n = new Notification('Statuts WhatsApp prêts', {
+          body: 'Ouvrez Uzaapp pour partager vos statuts du jour.',
+          icon: '/icons/Icon-192.png',
+          tag: 'wa_status_ready',
+        });
+        n.onclick = function () {
+          window.focus();
+          window.location.href = '/profile';
+        };
+      }
+
+      function tick() {
+        const nextRaw = localStorage.getItem(NEXT_KEY);
+        if (!nextRaw) return;
+        const nextAt = Date.parse(nextRaw);
+        if (isNaN(nextAt)) return;
+        if (Date.now() >= nextAt) {
+          showWaStatusNotification();
+          localStorage.setItem(NEXT_KEY, new Date(Date.now() + INTERVAL_MS).toISOString());
+        }
+      }
+
+      setInterval(tick, 60000);
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) tick();
+      });
+      window.addEventListener('load', tick);
+    })();
+
+    // Check for new service worker updates
+    window.addEventListener('load', function() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.addEventListener('updatefound', function() {
+            const newWorker = registration.installing;
+            newWorker.addEventListener('statechange', function() {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // New service worker available, show update notification
+                console.log('Uzaapp: New version available, reloading...');
+                if (confirm('Une nouvelle version d\'Uzaapp est disponible. Recharger maintenant?')) {
+                  window.location.reload(true);
+                }
+              }
+            });
+          });
+        });
+      }
+    });
+  </script>
+
+  <script>
+    window.addEventListener('load', function() {
+      if (typeof initSqlJs !== 'undefined') {
+        console.log('Uzaapp: sql.js (WASM) is loaded and ready.');
+      } else {
+        console.warn('Uzaapp: sql.js (WASM) failed to load.');
+      }
+    });
+
+    // PWA Install Prompt
+    let deferredPrompt;
+    const installButton = document.getElementById('install-button');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later
+      deferredPrompt = e;
+      // Update UI to notify the user they can install the PWA
+      console.log('PWA: Install prompt available');
+
+      // Prompt must be triggered by a user gesture.
+      if (installButton) {
+        installButton.style.display = 'inline-flex';
+      }
+    });
+
+    if (installButton) {
+      installButton.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+
+        deferredPrompt = null;
+        installButton.style.display = 'none';
+      });
+    }
+
+    window.addEventListener('appinstalled', (evt) => {
+      // Log install to analytics
+      console.log('PWA: App was installed');
+      deferredPrompt = null;
+    });
+
+    // Check if install prompt was already dismissed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      console.log('PWA: App is already installed and running in standalone mode');
+    }
+
+  </script>
+  <style>
+    body {
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .loading-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      background-color: #ffffff;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(254, 62, 0, 0.1);
+      border-top-color: #FE3E00;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .install-button {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 99998;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      background: #FE3E00;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(254, 62, 0, 0.35);
+    }
+
+    .install-button:hover {
+      background: #e03600;
+    }
+  </style>
+</head>
+<body>
+  <button id="install-button" class="install-button" style="display:none;" aria-label="Installer Uzaapp">
+    Installer l'app
+  </button>
+  <div id="loading_screen" class="loading-container">
+    <div class="spinner"></div>
+  </div>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
