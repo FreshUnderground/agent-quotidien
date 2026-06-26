@@ -165,17 +165,22 @@ def telegram_combined_summary(
     date_str: str,
     image_count: int = 0,
 ) -> str:
-    """Résumé Telegram — chaque marque équilibrée."""
+    """Résumé Telegram — conseils du jour en tête, puis extraits par marque."""
     lines = [f"📅 Briefing du jour — {date_str}", ""]
+    conseils = _conseils_du_jour_block(sections)
+    if conseils:
+        lines.append("💡 *CONSEILS DU JOUR*")
+        lines.extend(conseils)
+        lines.append("")
     if image_count > 0:
         lines.append(f"🖼️ {image_count} ébauches visuelles jointes à l'email")
-        lines.append("📋 Guide créateur marketing : output/images/[date]/briefs-createur.md")
+        lines.append("📋 Guide créateur : briefs-createur.md")
         lines.append("")
 
     for s in sections:
         lines.append(f"{s.emoji} {s.title.upper()}")
         lines.append("-" * 28)
-        for h in _extract_highlights(s.content, max_lines=8):
+        for h in _extract_highlights(s.content, max_lines=5):
             lines.append(h)
         lines.append("")
 
@@ -245,6 +250,14 @@ def whatsapp_plain_summary(section: BriefingSection, date_str: str) -> str:
 def combine_sections_plain(sections: list[BriefingSection], date_str: str) -> str:
     """Un seul message texte regroupant toutes les sections."""
     parts = [f"📅 BRIEFING QUOTIDIEN — {date_str}", f"Dieu-Merci Kamina | Butembo, RDC", ""]
+    conseils = _conseils_du_jour_block(sections)
+    if conseils:
+        parts.append("=" * 50)
+        parts.append("💡 CONSEILS DU JOUR")
+        parts.append("=" * 50)
+        for c in conseils:
+            parts.append(c.replace("*", ""))
+        parts.append("")
     for s in sections:
         parts.append("=" * 50)
         parts.append(f"{s.emoji} {s.title.upper()}")
@@ -294,16 +307,54 @@ def combine_sections_html(
         )
     body = "\n".join(blocks)
     images_block = _images_html_block(image_paths or [])
+    conseils_html = ""
+    conseils = _conseils_du_jour_block(sections)
+    if conseils:
+        items = "".join(
+            f'<li style="margin:8px 0">{c.replace("*", "")}</li>' for c in conseils
+        )
+        conseils_html = f"""
+<div style="background:#fff8e1;border-left:4px solid #f9a825;padding:16px 20px;margin:20px 0;border-radius:6px">
+<h2 style="color:#e65100;margin:0 0 12px">💡 Conseils du jour</h2>
+<ul style="margin:0;padding-left:20px;line-height:1.6">{items}</ul>
+</div>"""
     return f"""<!DOCTYPE html>
 <html><body style="font-family:Arial,sans-serif;max-width:720px;margin:auto;padding:20px">
 <h1 style="color:#1a1a1a">📅 Briefing quotidien — {date_str}</h1>
 <p style="color:#555">Kawa Kanzururu · UZAAPP · INVESTEE-GROUP · Appels d'offres</p>
 <hr>
+{conseils_html}
 {body}
 {images_block}
 <hr>
 <p style="color:#888;font-size:12px">Agent quotidien — dieumercikamina@gmail.com</p>
 </body></html>"""
+
+
+CONSEIL_PATTERN = re.compile(
+    r"##\s*💡\s*Conseil[^\n]*\n+(.+?)(?=\n## |\n---|\Z)",
+    re.DOTALL | re.IGNORECASE,
+)
+
+
+def _extract_conseil(content: str) -> str:
+    """Extrait le texte du bloc « Conseil … du jour »."""
+    match = CONSEIL_PATTERN.search(content)
+    if not match:
+        return ""
+    text = match.group(1).strip()
+    lines = [ln.strip() for ln in text.split("\n") if ln.strip() and not ln.strip().startswith("#")]
+    return " ".join(lines)[:280]
+
+
+def _conseils_du_jour_block(sections: list[BriefingSection]) -> list[str]:
+    """Bloc prioritaire : tous les conseils du jour, une ligne par marque."""
+    lines: list[str] = []
+    for s in sections:
+        conseil = _extract_conseil(s.content)
+        if conseil:
+            lines.append(f"{s.emoji} *{s.title}* : {conseil}")
+    return lines
 
 
 def _extract_highlights(content: str, max_lines: int = 5) -> list[str]:
@@ -329,20 +380,23 @@ def whatsapp_combined_summary(
     date_str: str,
     image_count: int = 0,
 ) -> str:
-    """Résumé WhatsApp — chaque marque a sa part (équilibré)."""
+    """Résumé WhatsApp — conseils du jour en premier, puis extraits par marque."""
     lines = [f"📅 *Briefing* — {date_str}", ""]
-    if image_count > 0:
-        lines.append(f"🖼️ *{image_count} ébauches* + guide *briefs-createur.md* (visuels réalistes à concevoir)")
+    conseils = _conseils_du_jour_block(sections)
+    if conseils:
+        lines.append("💡 *CONSEILS DU JOUR*")
+        lines.extend(conseils)
         lines.append("")
-    per_section = 260  # ~4 sections dans 1200 car.
+    if image_count > 0:
+        lines.append(f"🖼️ *{image_count} ébauches* + *briefs-createur.md*")
+        lines.append("")
 
     for s in sections:
         lines.append(f"{s.emoji} *{s.title}*")
-        for h in _extract_highlights(s.content, max_lines=4):
+        for h in _extract_highlights(s.content, max_lines=3):
             lines.append(h)
         lines.append("")
-        # Limiter taille totale
-        if len("\n".join(lines)) > 1150:
+        if len("\n".join(lines)) > 1100:
             lines.append("_Suite dans l'email_")
             break
 
