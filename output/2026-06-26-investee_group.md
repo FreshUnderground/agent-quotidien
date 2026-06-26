@@ -1,39 +1,39 @@
 # 💻 INVESTEE-GROUP — 26 juin 2026
 
 ## À faire aujourd'hui (communication & business)
-1. Publier visuel **IM-SYSTEM** (jour pair) : messagerie d'équipe sécurisée — lien imsystem.investee-group.com.
-2. Relayer l'actualité NTIC : Plan Numérique RDC 2026-2030 (cybersécurité, 250 000 jeunes formés) — positionner INVESTEE comme partenaire local.
+1. Publier un post IM-SYSTEM (jour pair) sur la gestion intégrée pour PME congolaises.
+2. Relayer l'actualité cybersécurité RDC (ARPTC, Code du numérique) en proposant audit + helpdesk INVESTEE.
 
 ## Posts réseaux sociaux
 
 ### Facebook / LinkedIn
-**Texte :** La RDC accélère sa transformation numérique (PNN2 2026-2030). INVESTEE-GROUP, à Butembo, accompagne entreprises et ONG : helpdesk, cybersécurité, formations. Aujourd'hui : découvrez **IM-SYSTEM**, notre messagerie pro. 💬 imsystem.investee-group.com
+**Texte :** La RDC accélère sa gouvernance numérique. INVESTEE-GROUP accompagne les entreprises de Butembo : développement, helpdesk, sécurité IT et IM-SYSTEM. Besoin d'un audit ? investee-group.com
 
 ### LinkedIn (version pro B2B)
-**Texte :** Cybersécurité et collaboration : deux piliers du Plan Numérique congolais. INVESTEE-GROUP propose IM-SYSTEM pour centraliser les échanges d'équipe en environnement sécurisé. Demandez une démo : investee-group.com
+**Texte :** Conformité numérique 2026 : nouvelles obligations pour prestataires cloud et fintechs. INVESTEE-GROUP — NTIC Butembo — propose formations, sécurisation réseau et déploiement IM-SYSTEM. Contactez-nous pour un diagnostic gratuit.
 
 ### X
-**Texte :** #RDC #NTIC — IM-SYSTEM by INVESTEE-GROUP : messagerie sécurisée pour vos équipes à Butembo et au-delà. 🔒 imsystem.investee-group.com
+**Texte :** 💻 Digitalisation + cybersécurité en RDC ? INVESTEE-GROUP · dev · helpdesk · IM-SYSTEM · Butembo → investee-group.com
 
 ## 🎨 Conception d'images — conseils du jour
 
 ### Visuel à créer
-- **Type :** post service IM-SYSTEM
-- **Message visuel :** Communication d'équipe centralisée et sécurisée
-- **Éléments :** bulles chat, cadenas, logo IM-SYSTEM
-- **Texte sur visuel :** « IM-SYSTEM — Messagerie pro »
-- **Dimensions :** 1080×1080
-- **Brief créatif :** Fond navy #1A237E, accents bleu #2196F3, texte blanc — UI épurée sans multicolore
+- **Type :** bannière LinkedIn IM-SYSTEM
+- **Message visuel :** Dashboard gestion intégrée
+- **Éléments :** blocs UI, icônes modules, logo IM-SYSTEM
+- **Texte sur visuel :** « IM-SYSTEM · Gestion intégrée »
+- **Dimensions :** 1200×628 px
+- **Brief créatif :** Fond navy #1A237E, accents bleu #2196F3, blocs blancs épurés type SaaS
 
 ### Idée carrousel (3 slides)
-1. Slide 1 : « Votre équipe, un canal unique »
-2. Slide 2 : « Fichiers + messages sécurisés »
-3. Slide 3 : « Démo gratuite — investee-group.com »
+1. Slide 1 : « Votre entreprise, un seul système » — #2196F3
+2. Slide 2 : Modules (stock, facturation, RH) — icônes blanches sur #1A237E
+3. Slide 3 : CTA « Demandez une démo » — imsystem.investee-group.com
 
 ## 💡 Conseil INVESTEE du jour
-Croisez l'actualité nationale (CERT sectoriel ARPTC) avec votre offre sécurité — un post contextualisé convertit mieux qu'un catalogue de services.
+Liez vos posts à l'actualité réglementaire (deadline conformité 30 juin) pour créer l'urgence commerciale sans alarmisme.
 
 ## ⚡ Priorité du jour
-Publier le carrousel IM-SYSTEM sur LinkedIn avec CTA démo.
+Publier le visuel IM-SYSTEM LinkedIn avec lien imsystem.investee-group.com.
 
 ---

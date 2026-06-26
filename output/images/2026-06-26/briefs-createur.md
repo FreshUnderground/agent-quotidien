@@ -26,11 +26,11 @@ Les fichiers `.png` auto-générés sont des **ébauches** (texte + charte). Pou
 **URL image (catalogue) :** https://uzaapp.com/uploads/produits/1781423346_0aa500d2ccbef317.jpg
 (Capture ou import directe dans Canva)
 
-**Texte sur le visuel :** ZKTeco Fingerprint — 250.00 $
+**Texte sur le visuel :** ZKTeco Fingerprint — 250 $
 
 **Mise en page recommandée (Canva / Photoshop) :**
 - Zone haute (60 %) : **photo réelle du produit** sur fond blanc ou dégradé léger orange pâle
-- Bandeau bas orange `orange #E85D2C` : nom + **prix 250.00 $** en gros blanc
+- Bandeau bas orange `orange #E85D2C` : nom + **prix 250 $** en gros blanc
 - Coin haut droit : accent teal #1A8A8A (comme l'icône UZAAPP)
 - Bas : « Commandez sur **uzaapp.com** » + logo UZAAPP
 - **Ne pas** utiliser d'IA pour générer le produit — photo catalogue ou prise studio
@@ -47,11 +47,11 @@ Les fichiers `.png` auto-générés sont des **ébauches** (texte + charte). Pou
 **URL image (catalogue) :** https://uzaapp.com/uploads/produits/1781423121_6cded309e56924e6.jpg
 (Capture ou import directe dans Canva)
 
-**Texte sur le visuel :** Litebeam 5AC — 135.00 $ $
+**Texte sur le visuel :** Litebeam 5AC — 135 $ $
 
 **Mise en page recommandée (Canva / Photoshop) :**
 - Zone haute (60 %) : **photo réelle du produit** sur fond blanc ou dégradé léger orange pâle
-- Bandeau bas orange `orange #E85D2C` : nom + **prix 135.00 $** en gros blanc
+- Bandeau bas orange `orange #E85D2C` : nom + **prix 135 $** en gros blanc
 - Coin haut droit : accent teal #1A8A8A (comme l'icône UZAAPP)
 - Bas : « Commandez sur **uzaapp.com** » + logo UZAAPP
 - **Ne pas** utiliser d'IA pour générer le produit — photo catalogue ou prise studio
@@ -64,9 +64,9 @@ Les fichiers `.png` auto-générés sont des **ébauches** (texte + charte). Pou
 
 **Objectif :** Marketing authentique café Fairtrade — **photo terrain de préférence**.
 
-**Texte sur le visuel :** Café des neiges éternelles
+**Texte sur le visuel :** Café des neiges éternelles · Fairtrade 2026
 
-**Sujet / angle :** Mont Rwenzori stylisé + grains de café arabica
+**Sujet / angle :** Montagnes Rwenzori stylisées + grains de café
 
 **À photographier sur place (réaliste) :**
 - Mains triant des cerises rouges à la MSL (cadrage serré, lumière naturelle)
@@ -83,7 +83,7 @@ Les fichiers `.png` auto-générés sont des **ébauches** (texte + charte). Pou
 
 **Objectif :** Marketing SaaS B2B — **capture d'écran réelle** du tableau de bord IM-SYSTEM.
 
-**Texte sur le visuel :** IM-SYSTEM — Messagerie pro
+**Texte sur le visuel :** IM-SYSTEM · Gestion intégrée
 
 **Visuel réaliste :**
 - Screenshot app (factures, stock, tableau de bord) — flouer données sensibles
